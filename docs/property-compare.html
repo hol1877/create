@@ -1,0 +1,1113 @@
+<title>상계·중계 재건축 매물 비교</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gothic+A1:wght@600;800&family=IBM+Plex+Sans+KR:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: 결론 → 자금 조건 → 단지 카드 → 1순위 비교 → 실거래 → 매물 평가 → 재건축 지표 → 전체 매물 → 일정 */
+:root{
+  --bg:#f5f8f6; --surface:#ffffff; --surface-2:#edf2ef; --ink:#15211d; --muted:#5c6d66; --line:#d9e3de; --axis:#a9b7b1;
+  --accent:#0f766e; --accent-soft:#d5ece8; --accent-2:#5aa89c;
+  --warn:#b45309; --warn-soft:#fbead3; --bad:#b42318; --bad-soft:#fbe0dd; --good:#15803d; --good-soft:#dcf1e2;
+  --blue:#3b6ea5; --blue-soft:#dde8f4; --grey:#8a9792; --grey-soft:#e8edea;
+  --s-muj:#2a78d6; --s-s9:#e0632c; --s-s11:#8e5bd0; --s-s14:#0f766e; --s-cs:#d6578b; --s-s10:#c98500;
+  --f-display:"Gothic A1","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1714; --surface:#16211d; --surface-2:#1d2a25; --ink:#e4ede9; --muted:#97a9a2; --line:#2a3833; --axis:#4a5b55;
+  --accent:#4cc3b3; --accent-soft:#163a35; --accent-2:#2f8a7e;
+  --warn:#f0a54a; --warn-soft:#3a2a14; --bad:#f2837a; --bad-soft:#3d1c1a; --good:#6fd08e; --good-soft:#173623;
+  --blue:#8ab4e0; --blue-soft:#1b2c3f; --grey:#7f8f89; --grey-soft:#24302c;
+  --s-muj:#5b9ded; --s-s9:#f0844f; --s-s11:#b08ae6; --s-s14:#4cc3b3; --s-cs:#e982ad; --s-s10:#e0a63a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1714; --surface:#16211d; --surface-2:#1d2a25; --ink:#e4ede9; --muted:#97a9a2; --line:#2a3833; --axis:#4a5b55;
+  --accent:#4cc3b3; --accent-soft:#163a35; --accent-2:#2f8a7e;
+  --warn:#f0a54a; --warn-soft:#3a2a14; --bad:#f2837a; --bad-soft:#3d1c1a; --good:#6fd08e; --good-soft:#173623;
+  --blue:#8ab4e0; --blue-soft:#1b2c3f; --grey:#7f8f89; --grey-soft:#24302c;
+  --s-muj:#5b9ded; --s-s9:#f0844f; --s-s11:#b08ae6; --s-s14:#4cc3b3; --s-cs:#e982ad; --s-s10:#e0a63a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6}
+.wrap{max-width:1180px;margin:0 auto;padding-block:28px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:40px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.25}
+h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800}
+h2{font-size:1.25rem;font-weight:800}
+h3{font-size:1rem;font-weight:600}
+p{margin:0}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+.small{font-size:.85rem}
+header{display:grid;gap:14px}
+.eyebrow{font-size:.78rem;letter-spacing:.08em;color:var(--accent);font-weight:600}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 12px;font-size:.85rem}
+.chip b{color:var(--accent);font-weight:600}
+section{display:grid;gap:16px;min-width:0}
+.sec-head{display:grid;gap:4px}
+.verdict{background:var(--accent-soft);border-radius:14px;padding:18px 20px;display:grid;gap:10px}
+.verdict ol{margin:0;padding-left:1.3em;display:grid;gap:6px}
+.verdict li::marker{font-family:var(--f-num);color:var(--accent);font-weight:600}
+.scroll{overflow-x:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{padding:10px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap;vertical-align:top}
+th{font-size:.78rem;color:var(--muted);font-weight:600;letter-spacing:.02em;background:var(--bg)}
+tr:last-child td{border-bottom:0}
+td.r,th.r{text-align:right}
+td.wrapcell{white-space:normal;min-width:180px}
+.rank{font-family:var(--f-num);font-weight:500;color:var(--accent);font-size:1.05rem}
+.apt{font-weight:600}
+.pill{display:inline-block;border-radius:6px;padding:1px 8px;font-size:.78rem;font-weight:600;white-space:nowrap}
+.p-good{background:var(--good-soft);color:var(--good)}
+.p-warn{background:var(--warn-soft);color:var(--warn)}
+.p-bad{background:var(--bad-soft);color:var(--bad)}
+.p-grey{background:var(--grey-soft);color:var(--muted)}
+.g-top{background:var(--accent-soft);color:var(--accent)}
+.g-cand{background:var(--blue-soft);color:var(--blue)}
+.g-low{background:var(--grey-soft);color:var(--muted)}
+.g-wait{background:var(--warn-soft);color:var(--warn)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:20px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;display:grid;gap:12px;min-width:0}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.82rem;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:10px;height:10px;border-radius:3px;display:inline-block;flex:none}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--f-body);fill:var(--ink)}
+svg .axis{fill:var(--muted);font-size:11px}
+svg .lbl{font-size:12px}
+svg .val{font-family:var(--f-num);font-size:11px}
+.matrix td{text-align:center}
+.matrix td:first-child{text-align:left}
+.ok{color:var(--good);font-weight:600}.no{color:var(--bad);font-weight:600}.chk,.warn{color:var(--warn);font-weight:600}
+.up{color:var(--bad)}.down{color:var(--good)}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.filters button{font:inherit;font-size:.85rem;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:4px 12px;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.steps{display:grid;gap:10px}
+.step{display:grid;grid-template-columns:96px 1fr;gap:12px;align-items:baseline;padding-bottom:10px;border-bottom:1px dashed var(--line)}
+.step:last-child{border-bottom:0}
+.step .d{font-family:var(--f-num);color:var(--accent);font-size:.9rem}
+.stage{display:flex;gap:3px;align-items:center}
+.stage i{width:18px;height:8px;border-radius:2px;background:var(--grey-soft);display:inline-block}
+.stage i.on{background:var(--accent)}
+.note{font-size:.82rem;color:var(--muted);display:grid;gap:4px;line-height:1.65}
+.note ul{margin:0;padding-left:1.2em}
+footer{font-size:.8rem;color:var(--muted);display:grid;gap:6px}
+footer a{color:var(--accent)}
+/* 단지 카드 */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:12px}
+.cx{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:grid;gap:6px;align-content:start}
+.cx.focus{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.cx .name{font-weight:600;display:flex;align-items:center;gap:8px}
+.cx .big{font-family:var(--f-num);font-size:1.35rem;font-weight:500}
+.cx .bigl{font-size:.75rem;color:var(--muted)}
+.cx dl{margin:4px 0 0;display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-size:.8rem}
+.cx dt{color:var(--muted)}.cx dd{margin:0}
+.tag{font-size:.72rem;padding:1px 7px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-weight:600}
+.todo{color:var(--muted);font-style:italic}
+/* 컨트롤 */
+.controls{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.seg{display:inline-flex;background:var(--surface-2);border-radius:9px;padding:3px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;color:var(--muted);padding:6px 11px;border-radius:7px;font:inherit;font-size:.85rem;cursor:pointer}
+.seg button.on{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:0 1px 2px rgba(0,0,0,.12)}
+label.ck{font-size:.85rem;color:var(--muted);display:inline-flex;gap:5px;align-items:center;cursor:pointer}
+.chartbox{position:relative;min-width:0}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:.78rem;box-shadow:0 4px 14px rgba(0,0,0,.14);min-width:180px;z-index:5}
+.tip .t{font-weight:600;margin-bottom:4px}
+.tip .r{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.inputs{display:flex;flex-wrap:wrap;gap:10px 14px;font-size:.85rem;color:var(--muted);align-items:center}
+.inputs label{display:inline-flex;gap:6px;align-items:center}
+.inputs input,.inputs select{padding:5px 7px;border:1px solid var(--line);border-radius:6px;background:var(--surface-2);color:var(--ink);font:inherit;font-size:.85rem}
+.inputs input[type=number]{width:90px;font-family:var(--f-num)}
+.btn{border:0;background:var(--accent);color:var(--surface);padding:6px 16px;border-radius:7px;font:inherit;font-size:.85rem;cursor:pointer;font-weight:600}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.del{border:0;background:transparent;color:var(--muted);cursor:pointer;font-size:.95rem}
+.formmsg{font-size:.82rem;color:var(--bad);min-height:1.2em}
+.verdictpill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.78rem;font-weight:600;background:var(--surface-2)}
+.verdictpill.ok{background:var(--good-soft)}.verdictpill.warn{background:var(--warn-soft)}.verdictpill.no{background:var(--bad-soft)}
+@media (max-width:520px){.step{grid-template-columns:1fr;gap:2px}}
+</style>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">노원구 상계·중계 · 2026년 10월 31일 기준</p>
+  <h1>상계·중계 재건축 매물 비교</h1>
+  <div class="chips">
+    <span class="chip"><b>실거주</b></span>
+    <span class="chip">생애최초 <b>보금자리론</b></span>
+    <span class="chip">매매가 · KB시세 <b>모두 6억 이하</b></span>
+    <span class="chip"><b>재건축</b> 단지만</span>
+    <span class="chip">1층 · 세입자 매물 <b>제외</b></span>
+    <span class="chip">쌀수록 <b>우선</b></span>
+  </div>
+</header>
+
+<section class="verdict" aria-labelledby="v-h">
+  <h2 id="v-h">한 줄 결론</h2>
+  <p>상계주공14단지는 <b>전용 41.3㎡ 실거래가 10월에 5.25~5.6억으로 올랐고, 45.9㎡는 최근 중위값이 4.7억대(4.46~5.27억)에 머물러 있습니다.</b> 그래서 41.3㎡ 매물은 시세 수준, 45.9㎡ 매물은 시세보다 비싸게 나와 있습니다.</p>
+  <ol>
+    <li>상계주공14단지 1404동 저층 <span class="num">5.2억</span>: KB와 같고, 최근 실거래보다 싸서 현금이 가장 적게 듭니다</li>
+    <li>상계주공10단지 1013동 저층 <span class="num">5.5억</span>: KB(5.6억)와 실거래보다 1천만 원 쌉니다</li>
+    <li>상계주공14단지 1402동 10층 <span class="num">5.4억</span>: 10월 실거래(5.5억, 10층)보다 조금 쌉니다</li>
+  </ol>
+  <p class="small">45.9㎡ 매물(1425·1420·1421동)은 적정가보다 3% 낮은 협상 목표(4.7~4.85억)까지 깎을 수 있을 때만 보세요. 아래 매물 평가 표에서 단지별 적정가와 협상 목표를 확인할 수 있습니다.</p>
+</section>
+
+<section aria-labelledby="f-h">
+  <div class="sec-head">
+    <h2 id="f-h">내 자금 조건</h2>
+    <p class="muted small">값을 바꾸면 아래 1순위 비교표, 매물 평가, 자금 계획이 모두 다시 계산됩니다.</p>
+  </div>
+  <div class="panel">
+    <div class="inputs">
+      <label>금리 <input type="number" id="rate" value="5.2" step="0.05"> %</label>
+      <label>만기 <input type="number" id="years" value="50" step="5"> 년</label>
+      <label>LTV <input type="number" id="ltv" value="70" step="5"> %</label>
+      <label>보금자리 한도 <input type="number" id="cap" value="42000" step="1000"> 만원</label>
+      <label>은행 DSR 한도 <input type="number" id="dsr" value="25747" step="500"> 만원</label>
+      <label>가용 자금 <input type="number" id="cash" value="32538" step="1000"> 만원</label>
+    </div>
+    <p class="note">6억 이하는 보금자리론으로 min(매매가×LTV, 보금자리 한도)를, 6억 초과는 은행 주담대로 min(매매가×LTV, 6억, 은행 DSR 한도)를 받는다고 계산합니다. KB시세를 아는 매물은 매매가와 KB 중 낮은 금액에 LTV를 곱합니다. 부대비용은 취득세와 지방교육세(생애최초 200만 감면), 중개보수 0.4%(부가세 포함), 채권·인지세·법무비 약 120만입니다. 은행 DSR 한도 기본값은 본인 소득 4,800만 원, 금리 4%에 스트레스 3%p, 40년 기준이고, 가용 자금 기본값은 시트의 3억 2,538만입니다.</p>
+  </div>
+</section>
+
+<section aria-labelledby="k-h">
+  <div class="sec-head">
+    <h2 id="k-h">단지 한눈에 보기</h2>
+    <p class="muted small">큰 숫자는 17평급(전용 39~41㎡)의 최근 실거래 중위값입니다.</p>
+  </div>
+  <div class="cards" id="cards"></div>
+</section>
+
+<section aria-labelledby="t-h">
+  <div class="sec-head">
+    <h2 id="t-h">1순위 6건 비교표</h2>
+    <p class="muted small">KB시세와 최근 실거래는 KB부동산 화면(2026-10-30)에서 옮겼습니다. 필요 현금에는 부대비용이 포함됩니다.</p>
+  </div>
+  <div class="scroll"><table id="top-table"></table></div>
+  <div class="grid2">
+    <div class="panel">
+      <h3>매매가 · KB시세 · 최근 실거래</h3>
+      <div class="legend">
+        <span><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="5" fill="var(--accent)"/></svg>매매가(호가)</span>
+        <span><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><rect x="1.5" y="1.5" width="9" height="9" transform="rotate(45 6 6)" fill="var(--warn)"/></svg>KB 일반가</span>
+        <span><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="4.5" fill="var(--surface)" stroke="var(--muted)" stroke-width="2"/></svg>최근 실거래</span>
+      </div>
+      <div id="ch-price"></div>
+      <p class="note">점이 KB(◆)보다 오른쪽에 있을수록, KB를 넘는 금액을 전부 현금으로 내야 합니다. 빨간 선은 보금자리론 6억 한도입니다.</p>
+    </div>
+    <div class="panel">
+      <h3>필요 현금 (대출 vs 내 돈)</h3>
+      <div class="legend">
+        <span><i class="sw" style="background:var(--accent-soft);border:1px solid var(--accent-2)"></i>보금자리론 대출</span>
+        <span><i class="sw" style="background:var(--accent)"></i>내 돈</span>
+        <span><i class="sw" style="background:var(--warn)"></i>부대비용</span>
+        <span><i class="sw" style="background:var(--bad)"></i>가용 자금선</span>
+      </div>
+      <div id="ch-cash"></div>
+    </div>
+  </div>
+  <div class="sec-head"><h3>조건 체크</h3><p class="muted small">✓ 충족 · ✗ 미충족 · ? 중개사 확인 필요</p></div>
+  <div class="scroll"><table class="matrix" id="matrix"></table></div>
+</section>
+
+<section aria-labelledby="c-h">
+  <div class="sec-head">
+    <h2 id="c-h">실거래 추이</h2>
+    <p class="muted small">국토부 실거래가 2021.01~2026.10 (2026-10-31 기준, 해제 거래 제외). 상계주공10단지는 실거래 데이터가 없어 빠져 있습니다.</p>
+  </div>
+  <div class="panel">
+    <div class="controls">
+      <div class="seg" id="groupSeg" role="group" aria-label="평형대"></div>
+      <div class="seg" id="metricSeg" role="group" aria-label="지표">
+        <button type="button" data-m="price" class="on">거래가</button>
+        <button type="button" data-m="ppy">전용 3.3㎡당</button>
+      </div>
+      <label class="ck"><input type="checkbox" id="exD" checked> 직거래 제외</label>
+      <label class="ck"><input type="checkbox" id="ex1" checked> 1층 제외</label>
+    </div>
+    <h3 id="chartTitle"></h3>
+    <div class="legend" id="legend"></div>
+    <div class="chartbox" id="chartbox">
+      <svg id="chart" viewBox="0 0 1000 380" role="img" aria-label="분기별 중위 거래가 추이"></svg>
+      <div class="tip" id="tip" hidden></div>
+    </div>
+    <p class="note">선은 분기별 중위 거래가, 흐린 점은 개별 거래입니다. 점선은 거래가 없던 분기를 건너뛴 구간입니다(2022년은 금리 급등으로 거래가 거의 끊긴 시기). 거래가 적은 분기는 값이 크게 흔들릴 수 있습니다.</p>
+  </div>
+  <div class="sec-head"><h3>시세 비교표 <span class="tag" id="tblGroup"></span></h3></div>
+  <div class="scroll"><table id="tbl"></table></div>
+  <p class="note">최근 시세 = 2026년 8~10월 거래의 중위값(3건 미만이면 최대 5~10월까지 넓힘) · 전고점 = 2021~2022년 분기 중위값 중 최고 · 저점 = 2023~2025년 분기 중위값 중 최저</p>
+  <div class="sec-head"><h3>자금 계획 (최근 시세로 살 때) <span class="tag" id="loanGroup"></span></h3></div>
+  <div class="scroll"><table id="loan"></table></div>
+  <div class="sec-head"><h3>최근 거래 <span class="tag" id="recentGroup"></span></h3></div>
+  <div class="scroll"><table id="recent"></table></div>
+</section>
+
+<section aria-labelledby="e-h">
+  <div class="sec-head">
+    <h2 id="e-h">매물 평가</h2>
+    <p class="muted small">처음에는 내 1순위·후보 매물을 넣어 두었습니다. 지우거나 새 매물을 추가할 수 있고, 입력한 매물은 이 브라우저에 저장됩니다.</p>
+  </div>
+  <div class="panel">
+    <div class="inputs" id="lf">
+      <label>단지 <select id="lfC"></select></label>
+      <label>전용 <select id="lfA"></select></label>
+      <label>동 <input id="lfD" placeholder="예: 1404" style="width:72px"></label>
+      <label>층 <input type="number" id="lfF" min="1" max="25" placeholder="층" style="width:64px"></label>
+      <label>호가 <input type="number" id="lfP" step="500" placeholder="52000"> 만원</label>
+      <label>상태 <select id="lfR"><option value="0">기본</option><option value="1000">부분수리</option><option value="2500">올수리</option></select></label>
+      <label>메모 <input id="lfM" placeholder="향, 입주시기 등" style="width:150px"></label>
+      <button type="button" id="lfAdd" class="btn">추가</button>
+      <button type="button" id="lfReset" class="btn ghost">처음 목록으로</button>
+    </div>
+    <p class="formmsg" id="lfMsg" role="status"></p>
+  </div>
+  <div class="scroll"><table id="lt"></table></div>
+  <p class="note"><span><b>판단 방법</b> · 같은 단지·같은 평형대의 최근 실거래(1층·직거래 제외) 중위값을 기준가로 씁니다. 최근 2개월에 거래가 4건 미만이면 4건이 될 때까지 기간을 늘립니다(최대 6개월). 층 보정은 1층 −8%, 2~3층 −3%이고, 수리 프리미엄은 부분수리 +1,000만, 올수리 +2,500만입니다. 판정 기준은 적정가의 96% 이하 <span class="ok">잘 산 가격</span>, 102% 이하 <b>적정</b>, 105% 이하 <span class="warn">약간 비쌈</span>, 그 이상 <span class="no">비쌈</span>입니다. 협상 목표는 적정가의 97%입니다. "저층"으로만 나온 매물은 3층으로 넣었으니 실제 층을 확인하면 고쳐 주세요.</span></p>
+</section>
+
+<section aria-labelledby="r-h">
+  <div class="sec-head">
+    <h2 id="r-h">단지별 재건축 지표</h2>
+    <p class="muted small">지금 용적률이 낮고 대지지분이 클수록 새로 지을 수 있는 집이 많아 분담금이 줄어듭니다.</p>
+  </div>
+  <div class="grid2">
+    <div class="panel">
+      <h3>지금 용적률 (낮을수록 유리)</h3>
+      <div id="ch-far"></div>
+      <p class="note">상계주공11단지는 자료에 따라 116%로도 나와 확인이 필요합니다. 상계주공1단지는 확인하지 못했습니다(상계1구역 260%는 다른 재개발 구역입니다).</p>
+    </div>
+    <div class="panel">
+      <h3>진행 단계와 사업성</h3>
+      <div class="scroll" style="border:0"><table id="stage-table"></table></div>
+      <p class="note">모두 정비구역 지정 전 초기 단계라 입주까지 10년 이상 걸릴 것으로 봅니다. 분담금은 상계주공14단지 전용 41㎡ → 84㎡ 기준 약 5.8억(2025년 3월 보도)이므로, 59㎡ 신청도 함께 검토하세요.</p>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="a-h">
+  <div class="sec-head">
+    <h2 id="a-h">관심 매물 전체 30건</h2>
+    <p class="muted small">같은 동·층·가격의 중복 매물은 합쳤고, 1층과 세입자 매물은 뺐습니다. 점 하나가 매물 하나입니다.</p>
+  </div>
+  <div class="panel">
+    <div class="legend" id="strip-legend"></div>
+    <div id="ch-strip"></div>
+  </div>
+  <div class="filters" role="group" aria-label="판정으로 거르기" id="filters"></div>
+  <div class="scroll"><table id="all-table"></table></div>
+</section>
+
+<section aria-labelledby="s-h">
+  <div class="sec-head"><h2 id="s-h">다음 할 일</h2></div>
+  <div class="panel steps">
+    <div class="step"><span class="d">11/2 (월)</span><span>KB부동산에서 상계주공14단지 71㎡(전용 49.94㎡) KB시세 확인. 위 실거래 추이에서 21평급이 6억 근처라 대기 매물이 보금자리론 대상인지 판단할 때 필요합니다</span></div>
+    <div class="step"><span class="d">11/4 (수)</span><span>1순위 중개사 전화: 실제 층수, 세입자 여부, 수리 시기, 대지지분, 가격 조정 가능 여부, 추정 분담금 자료</span></div>
+    <div class="step"><span class="d">11/7 (토)</span><span>임장: 상계주공14단지 1404·1402·1425·1420·1421동, 상계주공10단지 1013동 (모두 마들역 도보권)</span></div>
+    <div class="step"><span class="d">11/11 (수)</span><span>보금자리론 예상 한도 조회, 노원구 토지거래허가 대상 여부 확인</span></div>
+    <div class="step"><span class="d">11/15 (일)</span><span>가계약 여부 결정. 안 되면 다음 후보로 넘어가기</span></div>
+    <div class="step"><span class="d">매주 일요일</span><span>6억 초과 대기 매물(14단지 1403·1406동, 1단지 117동) 가격 확인. 6억 이하로 내려오면 바로 연락</span></div>
+  </div>
+</section>
+
+<footer>
+  <ul class="note">
+    <li>2026년 9~10월 거래는 신고기한(계약 후 30일)이 남아 있어 더 추가될 수 있고, 등기 전 거래는 해제될 수도 있습니다.</li>
+    <li>평형은 전용면적 기준으로 묶었습니다. 17평급 = 무지개 39.82·39.96㎡, 상계주공 41.3㎡, 청솔 39.78·39.92㎡ / 19평급 = 상계주공 45.55·45.9㎡ / 21평급 = 무지개 49.54·49.89㎡, 상계주공 49.94㎡, 청솔 49.5·49.85㎡ / 24평급 = 무지개 59.26㎡, 청솔 59.22~59.87㎡ 등.</li>
+    <li>14단지는 고층동과 저층동(62·72·84㎡)을 함께 표시합니다. 청솔은 9~10월 거래가 적어 최근 시세가 7~8월 거래 위주입니다.</li>
+    <li>호가는 부동산 앱 '내 관심' 매물에서 옮겼습니다. 재건축 지표와 보금자리론 조건은 기사·블로그 검색 결과라 공식 자료로 다시 확인해야 합니다.</li>
+  </ul>
+  <p>참고: <a href="https://www.hf.go.kr" target="_blank" rel="noopener">한국주택금융공사</a> · <a href="https://cleanup.seoul.go.kr" target="_blank" rel="noopener">서울시 정비사업 정보몽땅</a> · <a href="https://rt.molit.go.kr" target="_blank" rel="noopener">국토부 실거래가</a> · <a href="https://www.smarttoday.co.kr/ko-kr/articles/111319" target="_blank" rel="noopener">상계주공14단지 신통 자문</a> · <a href="https://view.asiae.co.kr/article/2025072415295712668" target="_blank" rel="noopener">상계주공10단지 신통 신청</a> · <a href="https://www.fnnews.com/news/202503121801160924" target="_blank" rel="noopener">상계주공14단지 분담금 추정</a></p>
+</footer>
+</div>
+
+<script>
+// 실거래 형식: "YYMM|일 전용면적 거래가(만원) 층 [D=직거래];..." (해제 거래 제외)
+window.RAW = {
+mujigae: `
+2111|27 39.96 57000 6;24 49.54 61800 15;17 49.54 60800 1
+2110|16 49.54 67700 7;15 49.54 67900 4
+2109|13 49.89 69000 4;11 49.54 71000 14;08 39.82 55000 1;04 49.89 65900 15
+2108|28 49.89 69700 8;25 59.26 80000 15;18 49.54 66900 7;17 49.54 67500 11;14 49.54 69000 13;12 49.54 66500 4
+2107|22 59.26 78000 7;14 49.54 70000 13;13 49.89 62300 14;10 39.82 59000 12;10 39.96 59000 14
+2106|29 49.54 66900 14;14 39.96 59900 10;14 39.82 55000 10;12 49.54 64800 8;12 59.26 67000 1;12 59.26 73800 3;09 49.89 64500 4;08 49.54 63500 2;05 49.54 63000 5;05 59.26 75000 5
+2105|22 49.54 62800 10;18 59.26 73900 9;15 39.96 54000 12;15 39.82 48500 4;15 39.82 51000 8;13 39.82 48500 1;08 39.96 48000 4;08 39.82 48000 1;07 39.82 51000 11
+2104|28 49.54 56000 1;26 49.54 59800 15;21 49.54 62000 13;20 59.26 68000 9;20 39.82 51000 10;20 39.82 50650 3;17 49.89 61900 13;17 39.82 51000 7;17 49.54 57000 2;10 39.82 49600 10
+2103|27 39.96 49700 6;27 39.82 49950 10;25 39.96 49900 12;22 49.54 59000 11;22 59.26 66000 7;20 39.96 47000 8;13 59.26 68000 4;13 59.26 70000 10
+2102|20 49.89 56000 4;20 59.26 66000 5;20 49.54 61000 9;03 39.82 51000 9;02 39.96 50000 6
+2101|30 39.96 49500 4;30 49.89 52000 11;28 49.54 57000 14;23 49.89 55500 9;23 39.82 46000 7;23 39.96 44000 15;16 59.26 66500 12;16 49.89 57500 3;11 39.82 45500 6;10 39.96 45000 7;09 49.54 49000 10;09 49.54 55000 9;08 39.96 43000 10
+2210|12 49.54 51500 2
+2207|13 39.96 50000 5
+2206|21 49.54 62900 11
+2203|31 39.96 57500 11;30 39.96 56200 7;26 39.82 58000 8;19 39.96 56000 4
+2202|26 39.96 54400 11;26 39.96 53500 2;08 39.96 57500 9
+2311|23 49.89 50900 14;20 49.54 50500 4;08 39.82 41000 8;08 39.96 41800 8;07 49.54 52000 7;04 49.89 48800 4;04 49.54 52200 9
+2310|25 59.26 60500 8;24 59.26 59500 11;20 39.96 43000 12;17 39.96 42000 7;17 49.89 50000 7
+2309|25 49.54 48500 2;16 39.96 40000 15;12 49.54 50600 8;12 59.26 55500 3;11 49.54 51000 14;06 49.89 52400 7;06 39.82 40000 1;02 39.82 37000 1
+2308|26 49.54 48000 2;26 49.54 51300 13;15 39.82 39700 12;12 49.54 51650 9;10 49.54 53400 12;04 49.54 48000 7
+2307|21 49.54 49000 5;19 39.96 39500 10;12 49.89 50000 4;08 39.96 30000 6;03 49.89 51800 13
+2306|29 39.96 37800 1;27 49.89 50800 7;27 39.96 41000 5;17 49.89 51250 8;17 49.54 53000 15;13 39.96 43000 12;13 49.54 52500 9;13 49.54 48000 9;12 49.89 51000 4;10 49.54 49900 14;10 39.82 40300 9;10 49.54 49000 3;03 39.96 41800 4;03 39.96 40000 3;02 49.54 49300 12;01 49.54 50000 15
+2305|23 49.89 50700 11;20 39.96 39300 3;20 49.54 48000 5;18 39.96 41500 4;17 39.96 41000 10;14 39.96 41700 4;11 49.54 49500 1;05 49.89 50500 12;04 49.54 48500 5
+2304|29 49.54 51500 3;18 49.54 48500 6;15 39.82 39900 9;14 49.54 47800 5;11 49.54 49950 6
+2303|29 49.89 49500 15;24 59.26 60000 4;21 49.54 47500 3;07 49.89 47500 10
+2302|25 39.96 40950 9;22 39.82 39500 5;18 59.26 60000 2
+2301|31 49.54 49000 5;19 39.96 39400 10;07 39.82 39700 9
+2412|15 39.82 41900 11;13 39.82 40750 12;07 39.96 37900 2
+2411|27 39.82 37500 1;25 39.82 37700 12;23 39.82 41900 7;12 39.96 36400 4;05 59.26 55500 9;02 49.89 51500 8
+2410|26 39.96 37300 5;11 49.54 44500 1
+2409|30 39.82 38000 12;24 59.26 55000 10
+2408|31 49.54 51000 12;16 59.26 44000 3;16 49.54 51800 13;08 39.82 39500 5;06 59.26 54500 2;06 49.54 51700 10;03 59.26 54800 2;02 49.89 49000 1
+2407|31 59.26 51000 6;27 39.82 38000 12;25 49.54 48900 2;23 39.96 38000 2;20 49.54 48500 1;19 59.26 55700 10;18 49.89 51600 12;16 39.82 41000 5;13 49.54 51000 8;13 39.96 35000 1;13 49.54 51300 11;10 39.82 38400 10;10 39.96 38000 4;06 59.26 59500 11;03 39.82 38000 4
+2406|25 39.96 37500 9;23 39.82 39000 6;21 49.89 49400 7;20 49.89 49000 15;06 49.54 51000 15;04 49.89 50200 11
+2405|18 49.89 51700 15;11 59.26 54500 2;01 59.26 55000 3
+2404|30 39.82 37500 1;23 49.54 47500 5;22 39.96 37000 7;20 39.96 38800 11;15 49.54 48800 9;06 39.96 38900 13;05 39.96 39500 5
+2403|30 49.54 51500 12;28 49.89 47500 10;16 39.96 39000 9;12 49.89 48000 10;02 49.54 49500 5
+2402|13 49.54 50800 6
+2512|30 59.26 60000 6;27 49.54 51900 2;20 39.96 40500 8;13 49.89 57500 8;09 39.82 41900 3
+2511|27 49.54 56700 14;26 39.82 37000 1;22 49.89 54500 3;18 49.54 57700 12;12 59.26 65000 5;11 39.82 39500 5;08 39.96 42300 6
+2510|19 39.82 42000 9;18 49.89 51000 12;18 49.54 44000 1;16 39.82 36400 1;15 49.54 54400 6;15 39.96 42000 5;14 39.82 41000 9;14 39.96 34500 1;13 49.54 51500 3;13 49.89 52900 12;04 49.54 53500 14;04 59.26 61500 6;03 39.96 42500 9;02 49.54 52300 5;01 49.54 56900 12;01 49.89 53000 9
+2509|30 59.26 59500 15;29 49.54 53000 12;28 59.26 64900 4;27 49.89 51000 3;27 49.54 52000 10;25 39.96 35000 12;24 39.96 36500 1;24 39.82 39500 10;23 39.82 40000 7;19 39.82 41500 8;16 39.82 41500 8;15 49.54 48500 7;13 39.96 41500 5;07 49.54 49800 2;06 49.54 52500 9;03 49.54 50700 15
+2508|30 49.89 50300 8;26 39.82 41800 8;26 39.96 40900 12;23 59.26 58800 6;22 59.26 58000 4;21 49.89 51700 11;19 49.54 51000 4;09 59.26 59500 9;08 49.54 51500 4
+2507|30 49.89 53000 12;26 49.89 52900 14;25 39.96 41000 10;18 39.96 39000 11;18 59.26 59500 8;17 49.54 52500 7;16 39.82 39500 6;16 59.26 63000 12;12 49.54 49700 8;05 39.96 42000 8;05 39.96 41000 8;05 49.89 48000 1;01 39.82 43000 10
+2506|28 39.96 42000 5;28 49.54 52000 9;27 49.89 51500 8;25 39.96 39000 15;25 49.89 51800 5;24 49.54 51000 2;24 49.54 50000 2;21 39.96 40400 11;21 49.54 50700 7;21 59.26 60900 12;20 39.96 38500 10;20 39.96 38200 2;18 49.89 52300 10;18 49.54 50500 4;18 49.54 50500 7;17 49.54 45700 1;17 49.54 50800 4;16 39.82 38000 4;14 39.96 39000 4;14 49.89 47000 1;14 49.54 52000 10;14 59.26 54700 1;13 49.54 51300 7;12 59.26 52500 2;10 39.82 41000 7;03 59.26 58900 8
+2505|30 39.82 40000 11;29 59.26 53500 2;24 39.82 40900 12;22 49.54 35000 3 D;20 59.26 58500 4;10 49.54 47800 2;02 49.89 51000 15
+2504|27 49.54 47500 3;24 59.26 57800 9;22 39.96 41000 11;19 49.54 52000 7;14 39.96 40000 13;12 59.26 52500 2;05 39.96 38500 3;05 59.26 60000 10;01 49.54 51500 6
+2503|26 49.89 46500 2;22 59.26 59000 2;22 39.96 37300 5;22 49.54 49500 5;20 49.54 50000 5;15 49.89 49350 11;15 39.96 39500 12;14 49.54 49500 11;14 49.89 44000 1;13 39.96 40500 3;11 59.26 57000 4;08 39.96 38500 9;04 39.96 37500 15;04 39.96 35800 3;03 59.26 58000 3;01 49.54 52800 11
+2502|27 49.54 52000 10;27 49.54 48500 13;23 59.26 56000 8
+2501|16 59.26 56300 13;07 59.26 53800 12;04 49.54 50200 10
+2610|19 49.54 72000 8 D;17 39.96 56000 10;08 59.26 76000 7;06 39.96 56800 10;06 39.82 54000 4;03 49.89 70000 15
+2609|23 59.26 77000 15;12 49.54 71000 11;11 39.96 57000 8;11 39.82 55000 6;04 39.96 58000 6;03 39.96 51900 1
+2608|29 39.96 50800 11;25 59.26 55000 1;22 59.26 75000 12;15 39.96 54500 12;15 39.82 52000 7
+2607|30 49.54 64000 2;25 39.82 50800 5;22 49.89 62000 1;22 39.96 52000 13;22 39.82 52000 9;18 39.96 52000 9;18 49.54 70000 9;09 49.54 67000 2;07 59.26 75500 11;04 49.54 70000 13
+2606|27 39.96 49500 15;27 59.26 73000 6;26 59.26 70000 3;26 59.26 72000 10;26 39.96 46000 2;24 39.82 49500 10;23 39.82 50000 3;19 49.54 67000 11;13 39.96 45600 2;12 49.89 67000 7;09 49.54 60000 1;05 49.54 64500 4
+2605|30 39.96 40900 1;30 39.96 48000 4;29 49.89 63500 4;29 59.26 68500 3;28 49.89 64500 8;27 49.89 42000 13 D;22 39.96 25400 10 D;21 39.82 43800 1;16 39.96 45000 3;16 49.89 59900 15;16 49.89 63300 4;16 39.96 42000 1;16 39.82 44500 2;16 49.89 65000 12;15 49.54 64500 4;15 39.96 45300 2;09 49.54 66000 13;09 39.96 47500 9;09 39.96 40300 2;08 49.54 65000 12;08 39.96 43000 7;08 39.96 48000 9;07 39.96 50000 9
+2604|30 39.96 40500 2;24 39.96 45000 13;24 59.26 67000 2;23 39.96 46500 6;22 39.82 45000 11;22 39.96 48500 6;21 49.89 62000 10;21 39.82 40000 1;18 49.89 59500 15;17 59.26 68500 6;14 49.54 65000 13;11 59.26 68500 13;10 39.96 43800 8;09 49.89 60000 3;09 49.89 59000 2;09 49.54 65000 6;08 49.54 61000 4;08 49.89 60000 10;07 49.54 59500 7;07 49.89 60000 5;07 49.89 61000 7;04 39.96 42800 3;04 49.54 60000 9;04 39.82 45300 8;04 49.89 62000 11
+2603|31 59.26 65700 6;31 49.54 58700 3;28 39.82 41500 4;27 39.96 47500 6;25 59.26 66500 10;24 39.82 40000 1;24 39.96 39500 1;23 39.82 48800 6;21 49.89 60000 7;20 39.96 45000 3;20 59.26 67200 8;20 59.26 68800 5;19 49.54 60000 10;13 59.26 69200 12;10 39.82 42500 5;07 49.89 60000 3;04 39.82 42500 3;04 59.26 62000 15;03 39.82 45000 9
+2602|28 59.26 63500 3;26 39.82 41000 2;25 39.96 44500 11;25 39.96 42000 4;24 49.54 59500 11;24 49.54 60000 12;20 49.89 57900 6;19 49.54 59900 2;14 39.82 42300 5;14 39.82 41500 2;14 49.54 57000 3;13 59.26 68500 12;13 39.82 40800 6;13 39.96 42000 5;12 49.89 59700 5;09 49.54 64000 3;07 59.26 62000 3;07 49.54 52500 15;07 39.82 42000 2;06 39.96 41700 7;04 49.89 55800 9;03 49.54 55000 1
+2601|30 39.96 41700 5;20 49.54 52000 2;16 49.54 54500 3;16 49.89 58000 13;09 39.82 41000 11;08 59.26 64500 8
+`,
+s9: `
+2112|29 45.9 58000 11;16 45.9 57000 12
+2111|24 58.01 72600 5;22 41.3 59500 3;06 45.55 60500 11;04 49.94 72200 13
+2110|25 49.94 70800 3;04 45.9 59500 15;01 79.07 94000 5
+2109|17 58.01 80000 7;13 49.94 71300 13;10 49.94 70300 5;09 49.94 71000 15;09 61.52 80000 8;03 45.9 60700 4;02 61.52 77900 15
+2108|24 49.94 63900 2;24 79.07 94000 15;20 58.01 72000 1;14 79.07 93500 1;14 45.55 58000 1;13 41.3 62800 3;11 49.94 70000 11;10 58.01 76000 11;07 49.94 71500 12
+2107|29 58.01 72000 1;28 79.07 94000 6;27 58.01 78000 7;26 61.52 75700 14;25 45.9 59500 5;24 79.07 91000 12;17 58.01 75000 7;16 49.94 64300 13
+2106|23 45.9 60000 10;22 61.52 73700 15;10 58.01 74500 6;01 49.94 63200 14
+2105|26 49.94 65000 15;19 79.07 89000 7;19 61.52 74800 12;19 49.94 67000 9;13 41.3 53500 7;12 45.9 60000 7;09 61.52 72000 10
+2104|27 58.01 65000 12;27 79.07 91000 7;24 49.94 63700 4;23 45.9 56000 13;23 61.52 74900 7;22 66.56 79900 2;21 41.3 50800 1
+2103|29 41.3 52900 7;29 45.9 49000 6;28 45.9 52000 11;13 45.9 52000 8;01 61.52 71000 9
+2102|26 45.9 49900 7;26 49.94 60000 2;24 41.3 53000 5;23 45.55 52000 15;20 58.01 64500 3;18 41.3 51900 11;18 45.9 47900 10;17 58.01 63600 12;17 41.3 51500 15;16 49.94 63000 13;06 66.56 83000 12;06 58.01 67000 8;03 49.94 62900 6;01 79.07 92000 8;01 45.9 50000 4
+2101|29 58.01 66000 5;28 41.3 48000 12;26 58.01 65000 8;26 49.94 59950 7;25 49.94 58000 3;23 61.52 64000 11;21 41.3 50000 5;19 45.9 50000 15;14 58.01 61500 2;14 49.94 58500 8;13 49.94 60000 9;11 49.94 57000 5;11 49.94 59000 7;07 49.94 58500 4;05 49.94 55000 4;05 41.3 43500 10;04 58.01 64000 2;04 66.56 71500 15
+2212|06 49.94 48750 15
+2210|25 49.94 50000 2;18 49.94 50000 3
+2207|08 79.07 83900 1
+2205|18 49.94 66900 3;12 79.07 93500 8;07 45.9 58700 3;03 49.94 66000 2
+2204|30 41.3 60000 12
+2203|30 41.3 58000 5;22 49.94 68000 13;05 49.94 67500 3;03 45.9 56000 15
+2201|28 79.07 94000 9;28 45.9 58500 12
+2311|11 41.3 37700 12
+2310|28 58.01 58000 12;17 45.55 45000 9;14 66.56 63800 6;09 49.94 51900 8;06 45.9 45000 13
+2309|19 41.3 40000 12;16 45.9 44700 13;04 49.94 52000 7;02 41.3 39800 2
+2308|29 45.9 43000 8;26 45.9 39700 15;24 45.9 42000 11;23 49.94 49500 5;18 49.94 50500 3;17 61.52 63000 10;15 45.9 40900 14;14 41.3 39000 4
+2307|14 49.94 49000 6;14 41.3 39000 15;11 45.9 40500 8;05 45.9 42250 13
+2306|03 49.94 49000 10;01 45.9 40000 10
+2305|24 58.01 49000 1;22 49.94 49400 6;19 41.3 40000 9;16 58.01 55000 11;11 45.9 39000 15;03 79.07 75000 15;03 49.94 47000 15
+2304|25 66.56 65500 8;18 49.94 51500 3;15 49.94 49000 12
+2303|25 49.94 42000 1;25 41.3 42000 3;22 49.94 50000 8;18 79.07 77000 5
+2302|22 41.3 45800 8;09 49.94 40000 8;08 45.9 40000 1;02 49.94 50000 9
+2301|16 49.94 50000 12;05 45.9 43000 10
+2412|25 79.07 74300 7;24 45.55 38600 5;23 49.94 48000 5;20 79.07 73500 8
+2411|17 49.94 48200 9;15 45.9 40650 11;02 45.9 41000 12
+2410|31 49.94 51700 9;28 41.3 40000 3;24 45.9 38500 10;24 49.94 47500 15;11 41.3 37000 8;03 49.94 49000 14
+2409|30 49.94 49900 4;28 66.56 67000 6;25 49.94 49000 12;25 79.07 77300 10;19 66.56 64500 2;04 45.9 40000 8;02 41.3 40500 10
+2408|29 41.3 41300 9;29 58.01 57700 11;27 49.94 48300 2;19 41.3 39000 14;18 41.3 38900 11;15 66.56 65700 13;08 41.3 38000 8;06 49.94 48000 6;01 49.94 51000 3
+2407|24 79.07 71500 2;23 41.3 41000 10;20 49.94 45500 1;18 45.9 38500 15;16 49.94 47500 3;16 49.94 51000 4;13 49.94 52000 13;06 49.94 48000 13;03 45.9 38000 3
+2406|29 41.3 40000 4;29 45.9 35300 1;27 49.94 46200 1;25 79.07 72000 4;21 41.3 36500 10;17 49.94 47000 3;07 45.9 41000 8;07 45.9 37250 13
+2405|31 49.94 48200 10;25 79.07 76500 15;15 45.9 39200 6;11 66.56 67000 9
+2404|29 61.52 59000 10;25 45.9 36000 10;16 79.07 75500 2;12 49.94 46400 2;06 45.9 40800 15
+2403|30 45.9 40000 2;11 79.07 75000 9;08 49.94 47500 2;04 49.94 50000 13;04 49.94 46200 8
+2402|26 49.94 40000 12;03 79.07 75000 4
+2401|13 49.94 45700 14;09 49.94 50000 7
+2512|28 58.01 56500 7;24 41.3 39500 3;24 49.94 47400 3;16 49.94 51000 12;15 58.01 50000 4;06 58.01 56000 11;04 49.94 49000 11;02 45.55 40000 14;02 58.01 59400 8
+2511|28 58.01 56300 7;22 58.01 53700 1;19 49.94 49900 6
+2510|19 45.9 41900 4;18 45.9 34000 15;18 49.94 49500 15;18 45.9 39700 10;18 45.9 34900 1;15 41.3 40000 6;15 49.94 51000 8;15 49.94 37000 8;13 41.3 40000 5 D;13 49.94 45800 1;11 45.9 41900 6;11 58.01 55000 8;10 45.9 42000 11;03 41.3 38500 11;02 49.94 44000 15
+2509|26 45.55 40000 9;25 66.56 64000 12;23 49.94 51000 10;21 49.94 51000 10;13 58.01 56500 5;12 49.94 49300 9;12 58.01 53000 11;08 49.94 49500 7;05 49.94 49000 15;04 45.9 37000 5 D;03 61.52 58500 10
+2508|30 49.94 50500 7;25 58.01 54000 4;23 61.52 56200 14;22 45.9 38900 9;22 41.3 40000 13;19 45.9 38300 11
+2507|27 45.9 37000 5;25 41.3 40300 5;24 49.94 49200 15;22 66.56 52000 3;19 49.94 47800 15;19 45.9 40000 7;14 61.52 56000 13;12 49.94 49000 9;07 58.01 55500 11;03 45.9 40300 11;03 49.94 50000 10;02 79.07 75000 15;01 45.9 38000 5
+2506|30 79.07 77500 12;28 49.94 47000 2;28 45.9 38000 6;27 45.55 41000 9;27 61.52 56000 11;26 45.9 39000 5;26 45.9 38100 9;24 49.94 49500 5;23 61.52 55500 13;18 49.94 48000 3;16 49.94 49500 8;14 45.9 38500 8;11 49.94 43800 2;07 79.07 77250 6;03 49.94 47000 12
+2505|31 45.9 35300 1;28 49.94 49800 7;24 49.94 48800 7;22 61.52 56100 15;12 79.07 74800 5;10 49.94 48500 8
+2504|30 58.01 53900 12;19 49.94 49100 14;19 61.52 53500 4;17 79.07 73300 9;15 66.56 63000 5;12 79.07 76800 12;10 49.94 43000 1;09 45.9 35000 2;09 49.94 47000 14;09 49.94 41800 1;05 49.94 49000 4;03 41.3 42000 15
+2503|29 49.94 45800 4;29 45.9 38500 2;26 49.94 47500 3;22 79.07 75800 13;22 49.94 46000 3;19 49.94 48500 15;18 49.94 46500 14;15 41.3 39800 13;12 49.94 48500 3;10 45.9 34500 1;09 61.52 53000 1;06 66.56 64900 8;06 49.94 47800 3;04 45.9 40000 11;03 49.94 47200 6;03 45.9 38000 1;03 45.9 40000 15;03 49.94 46800 15
+2502|27 45.9 39000 11;27 79.07 66000 1;24 41.3 36000 5;22 49.94 50000 3;19 41.3 39000 6;08 49.94 51000 8;05 79.07 71000 2
+2501|24 45.9 41000 13;23 49.94 51300 12;12 45.9 38200 9
+2610|02 41.3 56000 5;02 49.94 63700 12
+2609|21 79.07 89000 10;21 66.56 79800 11;18 58.01 70000 5;11 49.94 64000 9;10 49.94 64500 2;05 66.56 70000 2
+2608|29 58.01 70000 7;26 41.3 55000 4;24 45.9 59700 12;22 58.01 71000 11;19 58.01 45000 9;14 61.52 69500 13;08 79.07 86500 14;08 45.9 52000 3;08 79.07 82000 9;07 49.94 64000 9;06 58.01 69800 8;06 58.01 69700 7;05 45.55 53900 12;01 45.55 54000 4
+2607|31 45.9 43500 1;31 41.3 48000 8;16 41.3 51000 12;16 49.94 63000 15;12 79.07 82700 9;11 49.94 62000 6;11 49.94 53000 1;08 61.52 67000 9;08 58.01 66700 5;07 49.94 61800 10;06 49.94 60500 7;03 58.01 66500 5;03 61.52 66500 14
+2606|29 49.94 60000 10;26 45.55 53000 10;24 45.9 49000 10;24 79.07 80000 3;22 45.9 49500 12;20 49.94 57900 9;18 49.94 61000 13;17 66.56 74000 12;17 66.56 72900 4;16 49.94 43000 11;15 45.9 44000 4;14 49.94 61000 15;13 49.94 58000 6;12 61.52 63500 4;11 79.07 79000 8;06 49.94 62500 4;06 45.9 39800 1;04 61.52 69500 15;03 61.52 67300 8;02 79.07 78000 13;01 49.94 59000 2
+2605|30 45.9 45000 12;30 45.9 48500 10;29 61.52 69700 7;29 58.01 70000 9;29 79.07 78000 15;29 49.94 59000 14;26 49.94 60000 5;26 49.94 55000 4 D;23 49.94 60000 4;22 66.56 71000 6;19 58.01 60000 6;19 45.9 47500 10;18 49.94 55500 8;15 49.94 63000 13;14 66.56 70000 5;12 45.9 45000 5;11 45.9 45000 13;09 61.52 65500 9;09 45.9 46000 9;07 58.01 64700 10;07 49.94 58500 6;06 49.94 62700 12;05 45.9 46700 4
+2604|30 45.9 43500 4;28 49.94 50500 1;27 61.52 66000 12;27 45.9 42700 3;27 58.01 61000 4;26 49.94 53000 11;25 49.94 58000 13;24 61.52 63500 3;21 49.94 58700 6;21 41.3 44400 11;18 49.94 57500 4;17 45.9 40000 4;17 45.9 38000 1;12 41.3 43000 3;12 45.55 43000 6;11 66.56 60000 2;10 45.55 37900 2;07 49.94 60000 7;06 45.9 44000 12;06 45.9 41800 13;04 41.3 41000 4;02 58.01 60000 11;02 45.55 40000 1
+2603|31 49.94 58000 7;31 45.9 43300 9;30 45.9 39800 15;30 61.52 59500 14;28 66.56 68000 5;21 79.07 79000 6;20 49.94 54500 13;18 58.01 67800 8;18 49.94 58000 5;18 45.55 45500 14;17 45.9 48000 8;14 49.94 57500 11;13 45.9 43000 8;11 49.94 58000 12;09 45.55 46000 5;04 58.01 65000 9;02 49.94 60000 12;02 61.52 61500 4
+2602|27 49.94 60000 10;26 45.55 45900 11;26 49.94 55000 3;26 45.9 46000 8;24 49.94 60000 7;24 49.94 59800 5;19 49.94 53000 4;14 49.94 56000 4;13 45.9 45000 11;12 49.94 52000 11;12 45.55 44000 5;12 49.94 48800 15;11 49.94 48000 15;10 58.01 61000 9;09 66.56 65000 8;09 66.56 65000 5;07 49.94 50000 2;07 66.56 62000 2;06 49.94 52800 10;06 45.9 46300 13;06 41.3 39800 2;02 45.9 39800 3
+2601|31 45.55 42000 8;31 41.3 40000 6;31 41.3 41300 13;28 49.94 52700 6;26 61.52 59500 5;24 45.9 40500 11;22 61.52 57000 15;21 79.07 79000 11;21 61.52 59500 10;20 45.9 41000 11;13 61.52 59900 9;10 49.94 50000 3;07 79.07 73000 6;05 45.9 42000 8
+`,
+s11: `
+2110|20 49.94 70250 13
+2109|24 68.86 85000 8;10 58.01 76500 15;09 49.94 73000 5;08 58.01 80500 5;04 49.94 70500 14
+2108|20 58.01 79500 8
+2107|26 68.86 89900 14;13 68.86 89900 5;10 49.94 73600 8;09 49.94 67000 10
+2106|11 58.01 60000 11;08 49.94 71500 14;05 49.94 70500 14;01 79.07 96300 2
+2105|29 68.86 86000 7;19 41.3 52500 1
+2104|28 49.94 65000 10;12 79.07 60000 2;09 59.2 73000 13;03 41.3 51000 2
+2103|28 60.5 64000 9;09 49.94 61000 5
+2102|01 79.07 60000 3
+2101|29 68.86 83200 13;26 41.3 54700 4;25 41.3 47500 9;25 58.01 60500 7;23 49.94 60000 14;19 49.94 63000 12;16 68.86 74000 3;16 49.94 59400 6;14 58.01 50000 12;06 41.3 51250 2
+2212|22 41.3 39500 12
+2211|30 41.3 40000 12;18 41.3 40000 12
+2210|20 49.94 52000 15
+2208|01 59.2 73000 7 D
+2205|14 49.94 70500 12
+2204|07 59.28 75500 9
+2201|08 41.3 58500 11
+2312|21 41.3 45000 9
+2311|17 49.94 53000 11
+2310|28 49.94 53000 7;28 49.94 50500 4;23 49.94 55000 4;20 41.3 39500 14;20 79.07 80000 15;14 59.2 57000 1;11 49.94 52000 12;10 41.3 39500 4;09 68.86 68000 6
+2309|09 58.01 59500 3;08 68.86 69000 7
+2308|30 58.01 60500 5;21 58.01 60000 7;15 41.3 43300 4;12 49.94 52000 5;07 41.3 41500 10;03 60.5 55500 4
+2307|13 41.3 41360 10;08 60.5 52500 4;01 79.07 83500 15;01 41.3 41000 15;01 49.94 60000 12 D
+2306|23 59.39 53800 11;22 59.2 54000 6;20 59.2 58900 10 D;19 60.5 55000 3;10 58.01 59000 10
+2305|25 58.01 61500 6;13 59.28 53500 13;02 58.01 54500 4
+2304|29 49.94 48000 2;21 79.07 81000 6;14 68.86 69000 8;10 68.86 62170 2 D;06 68.86 70000 10;05 49.94 50000 12;01 59.2 58000 10 D
+2303|21 58.01 63900 9;18 49.94 51000 11;02 58.01 58000 15
+2302|24 49.94 49400 15;20 41.3 42000 7;16 49.94 37000 13 D;14 41.3 44000 12
+2301|31 49.94 49500 13
+2411|25 68.86 70000 14;19 49.94 49500 3;16 41.3 42750 8;12 59.28 56000 14
+2410|04 49.94 52200 11;04 41.3 42000 12
+2409|28 49.94 54500 9;12 49.94 56000 11;05 68.86 74000 8
+2408|17 49.94 53700 10;14 49.94 53000 5;02 79.07 84500 7;01 58.01 56000 1
+2407|30 68.86 68500 7;29 58.01 63000 9;26 49.94 53000 3;22 60.5 53000 10;20 68.86 71500 3;18 41.3 42500 8;15 41.3 44300 8;14 60.5 53000 3;13 79.07 82700 8;12 59.28 55000 6;10 79.07 79500 15;07 49.94 51000 4;06 41.3 41300 8;03 79.07 79800 7;02 79.07 88000 9;02 60.5 54800 7;01 60.5 52850 2;01 68.86 66300 7
+2406|22 41.3 39600 2;16 41.3 40800 9;15 68.86 69000 6;13 49.94 52000 5;06 49.94 49000 3;06 41.3 39600 10
+2405|28 60.5 54800 7;27 41.3 39000 6;17 58.01 57000 5;14 49.94 45000 3;12 41.3 40500 12;10 41.3 39500 9;01 58.01 59000 5
+2404|26 79.07 77500 5;20 41.3 41000 9;18 41.3 39000 11;09 58.01 59500 12
+2403|20 79.07 85000 8;12 58.01 58000 4;08 68.86 60000 1 D
+2402|15 49.94 37200 8 D;01 41.3 40500 11
+2401|23 60.5 42000 8 D
+2512|27 59.28 59500 3;25 49.94 57000 4;24 79.07 83500 4;23 60.5 56500 7;18 68.86 73000 4;08 59.39 60000 9;06 49.94 54700 11
+2511|29 58.01 60000 10;27 41.3 42000 3;13 49.94 53700 10
+2510|15 59.28 57500 6;13 58.01 56000 2;11 49.94 51000 15;10 58.01 62000 9;10 68.86 69800 7;06 60.5 59000 2;04 68.86 63500 2;02 49.94 55000 10
+2509|30 41.3 42700 12;30 59.28 57400 11;30 49.94 54000 15;29 60.5 59000 9;25 59.2 54900 2;23 49.94 52500 12;23 49.94 51000 5;20 49.94 54000 6;18 58.01 59900 9;12 41.3 43000 8;06 58.01 60000 11;03 49.94 48000 2;03 41.3 44500 9;01 79.07 84300 12
+2508|29 41.3 42000 2;25 68.86 67500 1;23 49.94 54000 6;22 49.94 50000 3;13 49.94 50500 13
+2507|02 41.3 45000 9
+2506|27 41.3 40700 4;11 41.3 41100 4
+2505|24 79.07 83000 10;24 58.01 58000 3;06 79.07 84500 9;05 49.94 51500 10;03 60.5 55500 8;01 49.94 52500 10
+2504|21 60.5 50100 2;15 58.01 55000 4;12 49.94 52000 2
+2503|15 49.94 49500 12;08 58.01 59800 10
+2502|01 68.86 65000 1
+2501|26 68.86 67500 9;18 49.94 50000 9;14 68.86 66500 12;14 49.94 52300 10
+2610|16 41.3 61000 10;08 41.3 54900 2
+2609|30 41.3 58000 3;29 59.28 75000 8;22 58.01 76500 12;05 41.3 55000 15
+2608|22 58.01 70000 1;21 68.86 82000 5;12 79.07 86500 5;11 59.39 64000 3;01 60.5 75000 8
+2607|31 49.94 64500 6;25 41.3 47500 12;20 49.94 69000 5;14 59.2 68500 8;04 60.5 68000 10;04 68.86 81900 3
+2606|26 59.28 65000 3;18 79.07 83700 2;17 41.3 48250 4 D;09 58.01 66000 12;09 41.3 50000 4;01 41.3 48800 9
+2605|30 49.94 63000 3;25 41.3 43000 1;20 41.3 51500 10;19 49.94 58500 1;18 49.94 63000 9;12 49.94 56000 1;12 79.07 84000 2;12 41.3 46500 3;06 41.3 46500 7
+2604|30 49.94 64800 10;30 41.3 48000 15;29 49.94 64000 6;27 68.86 80250 8;27 41.3 49000 9;26 49.94 63000 5;25 49.94 62000 3;19 41.3 40000 1;16 41.3 47500 5;07 59.39 62000 13;04 79.07 82000 3;04 49.94 59500 7;04 49.94 62000 11
+2603|30 49.94 60000 14;28 49.94 55000 12;20 49.94 59600 13;20 41.3 49000 9;17 49.94 60000 8;16 41.3 46800 15;15 41.3 45000 3;13 59.39 67000 9;11 68.86 77000 15;10 49.94 57000 12;07 41.3 47500 10;02 41.3 45000 7
+2602|26 68.86 76000 7;23 41.3 43000 12;13 59.39 60000 2;13 59.28 63000 2;12 49.94 57000 12;12 79.07 85600 14;12 68.86 76800 10;11 79.07 83000 14;09 49.94 52900 1;07 59.39 59200 3;06 49.94 59900 9;06 49.94 52000 2;03 49.94 58000 6
+2601|24 58.01 57700 15;24 59.39 55900 2;21 59.28 60000 15;21 68.86 73500 5;17 41.3 45000 9;16 41.3 43800 6;15 58.01 59900 15;11 68.86 70900 11
+`,
+s14: `
+2108|09 84.41 98000 2
+2206|15 71.89 56000 4 D
+2310|01 71.89 70000 3
+2512|30 84.41 77600 2
+2511|29 84.41 73000 5;24 84.41 77300 1
+2507|30 71.89 62000 3
+2505|09 84.41 75000 2
+2504|30 62.17 50900 1
+2503|15 84.41 71500 3
+2607|29 84.41 84700 3;02 71.89 73000 4
+2605|26 71.89 70000 2;22 71.89 70000 2;19 71.89 67500 5
+2110|28 45.9 59900 4;19 41.3 60000 6
+2109|26 49.94 66000 8
+2108|10 45.9 51000 14;05 41.3 60000 6;05 41.3 63900 11
+2107|17 90.94 98000 1;13 41.3 60000 15
+2106|30 41.3 63000 7;28 49.94 71500 11;05 49.94 71800 9
+2105|29 41.3 61500 13;29 41.3 59000 13;29 45.9 59700 14;26 41.3 56500 8;19 45.9 52000 13;13 45.55 53000 5;12 59.39 72000 5;11 90.94 98500 10;08 41.3 41000 4;03 41.3 55500 8
+2104|28 41.3 53000 3;20 45.55 52000 15;15 41.3 54000 7;09 49.94 60000 15;07 49.94 60500 5;03 45.55 48000 15;02 49.94 59800 2;02 59.39 67000 13;01 49.94 57500 8
+2103|29 49.94 60000 5;27 45.9 48500 15;10 45.55 51600 3
+2102|22 41.3 50000 6;20 49.94 60000 5;19 45.55 51500 6;04 45.9 49150 15;03 41.3 49900 8;02 41.3 50000 15
+2101|16 45.55 52000 11;10 49.94 58850 5;07 59.39 58000 1;02 41.3 53000 9
+2212|26 45.55 39000 9
+2211|19 45.55 39700 9
+2208|27 90.94 76000 1
+2205|16 45.55 53800 5
+2204|27 45.55 60000 9;12 45.9 58900 12;01 49.94 69500 14
+2203|29 41.3 60000 8;28 45.9 58900 12;05 45.55 58000 4
+2202|09 45.9 53000 8
+2312|28 41.3 41000 15;23 45.55 39500 7;18 90.94 80000 2;18 45.9 42000 8 D;02 45.55 35700 9
+2311|24 49.94 45000 7;10 45.9 38500 11;03 49.94 50500 9
+2310|23 45.55 40000 9;05 41.3 43000 8 D
+2309|21 59.39 52500 9
+2308|19 49.94 49000 4;12 45.9 42000 4;07 45.9 42000 10
+2307|29 45.55 39000 9;28 49.94 50000 10;24 45.55 39650 11;04 45.9 40000 4
+2306|01 45.9 39500 10
+2305|18 41.3 39000 1;13 45.9 41000 6;10 90.94 78000 14;07 45.9 41000 12
+2304|27 45.9 41450 4;24 49.94 52800 13;22 41.3 31500 4 D;07 45.9 39000 2;06 41.3 41900 8;05 49.94 46500 15
+2303|24 45.9 37500 3;18 49.94 46000 2
+2302|28 41.3 38800 2;21 41.3 40000 1;14 45.9 41800 15
+2301|27 49.94 49450 2;03 41.3 39900 8
+2411|26 49.94 30500 3 D;19 45.9 40000 3
+2410|09 45.9 37750 3
+2409|24 45.9 36800 12;12 41.3 40100 14;10 41.3 39500 10;06 45.55 38900 10;04 41.3 41800 12;04 41.3 39900 4;03 45.55 38000 10
+2408|27 41.3 39500 2;27 41.3 39000 15;26 41.3 42000 11;24 45.9 38500 13;23 49.94 50000 4;18 45.9 37000 3
+2407|27 41.3 36200 2;27 59.39 55000 12;24 41.3 38200 5;19 45.9 36000 2;19 41.3 39800 14;18 45.9 36000 3;15 41.3 38000 15;12 45.55 36850 15;11 41.3 38000 10;11 41.3 37800 6;10 45.55 36300 6;10 45.9 35200 10;06 45.9 35900 2;05 41.3 40000 9
+2406|29 49.94 46500 9;28 45.9 34700 10;25 49.94 44000 15;23 59.39 54000 9;17 49.94 48500 10;12 49.94 44000 2
+2405|31 49.94 43500 2;30 41.3 38500 11;28 41.3 34000 12;27 41.3 37500 14;27 41.3 38000 7;01 49.94 46000 3
+2404|21 49.94 50000 7;13 45.9 36000 9;10 59.39 48000 6;01 59.39 52500 6
+2403|26 45.9 36500 12;25 41.3 25000 9;19 90.94 89000 12;15 59.39 51500 13;13 45.9 32000 1;05 59.39 51000 5
+2402|27 41.3 35000 10;25 41.3 38000 13;08 41.3 36500 12;02 45.9 37000 12
+2401|26 41.3 40500 5;03 45.9 37000 3
+2512|31 49.94 50500 9;20 59.39 55000 1;19 45.55 35500 1 D;17 41.3 40000 9;16 45.9 38800 4;09 45.55 40000 14;01 45.55 32000 4
+2511|20 49.94 48000 10
+2510|18 49.94 45000 13;18 41.3 28000 7;17 45.9 38000 6;14 45.9 38000 10;03 41.3 40000 10
+2509|27 45.9 40000 10;23 45.9 36500 12;22 41.3 37800 3;22 49.94 49000 11;13 49.94 49500 12;13 45.9 37800 11;10 45.55 39500 6;09 49.94 50000 5;09 45.55 39500 13;08 49.94 47400 5;08 49.94 45200 7;02 45.9 35500 14;01 45.9 38500 6
+2508|11 41.3 41000 12;09 49.94 46800 2
+2507|26 41.3 37000 15;05 41.3 37000 15;01 41.3 40100 5
+2506|24 45.9 35000 10;19 45.9 34500 12;18 49.94 47500 13;18 41.3 37500 10;18 49.94 49400 10;08 45.55 39100 12
+2505|31 41.3 37000 3;30 90.94 80700 6;28 49.94 46000 3;24 49.94 47000 5;24 49.94 49000 9;23 49.94 49000 10;17 49.94 48800 2;12 49.94 48500 6;03 49.94 48000 6;03 45.9 38250 12
+2504|26 45.55 38000 9;17 41.3 40200 12;11 45.9 38000 8
+2503|27 45.9 36500 7;24 49.94 47700 4;23 49.94 47000 6;23 45.9 35000 1;22 41.3 40000 12;14 49.94 46400 13;12 49.94 47000 2;03 45.9 39700 4
+2502|27 41.3 41000 8;14 45.9 36400 8;02 49.94 47900 10
+2610|22 49.94 60600 15;17 41.3 55000 10;05 41.3 53500 14;03 45.55 52700 14;02 41.3 52500 15;01 41.3 56000 8
+2609|27 49.94 61000 15;12 59.39 69000 14;12 41.3 45000 1;11 49.94 60000 6;10 45.9 44600 6
+2608|24 41.3 50000 14;21 41.3 46900 1;20 41.3 47000 2;19 49.94 42700 14;17 90.94 95000 8;14 45.9 47900 3;12 49.94 63400 9;11 45.9 47000 15;08 90.94 87000 13;05 41.3 46000 13
+2607|31 41.3 48000 13;30 45.9 46000 7;30 49.94 58000 1;29 41.3 49000 11;28 49.94 62000 15;28 45.9 44750 7;27 45.9 46000 9;27 49.94 65000 7;21 45.9 45000 14;21 41.3 44500 5;13 45.55 48000 9;11 49.94 56500 1;10 49.94 60000 7;09 45.9 45000 9;08 41.3 43000 3;08 41.3 48000 13;06 90.94 90000 8;05 49.94 62000 6;04 45.9 41500 12;01 49.94 60000 11
+2606|30 41.3 45800 8;27 49.94 63000 15;26 49.94 58000 14;24 41.3 47800 12;23 45.55 43000 3;17 41.3 45300 10;16 49.94 59800 15;16 90.94 87000 2;12 49.94 59000 13;09 49.94 62500 9;09 49.94 60000 12;06 45.9 41500 11;06 41.3 48000 11;06 45.55 42900 2;04 45.9 39200 8;03 45.55 39000 4;03 49.94 59000 5;03 49.94 56500 10;03 49.94 57000 13
+2605|30 45.9 40000 10;19 41.3 38000 15;18 49.94 56000 15;18 41.3 44800 5;16 41.3 41500 8;16 41.3 29650 6;15 45.55 41500 8;12 49.94 59500 10;12 49.94 56700 6;11 45.55 41700 9;09 49.94 55000 3;08 45.9 40000 8;06 49.94 60000 5;05 49.94 58000 7;04 49.94 57000 11;04 41.3 42300 10;01 41.3 42500 7
+2604|27 49.94 57500 8;27 59.39 60000 15 D;25 45.9 38000 3;23 41.3 38700 1;23 49.94 56000 3;22 45.9 38300 15;21 41.3 41000 15;20 45.9 41700 6;20 41.3 41000 13;18 41.3 35000 2;14 41.3 39500 6;14 49.94 57000 13;13 49.94 54800 15;13 41.3 43000 10;10 45.9 40000 13;04 41.3 42500 14;03 45.9 36400 3;02 59.39 60000 2;02 41.3 36500 1
+2603|31 49.94 56500 5;28 45.9 41700 4;25 59.39 55000 1;24 45.9 39700 13;16 45.55 41000 7;12 45.9 37800 13;11 45.55 40000 4;06 45.55 41250 10
+2602|28 45.55 40000 10;27 59.39 55800 2;26 49.94 60000 7;24 59.39 59000 4;23 59.39 59800 6;20 49.94 54000 6;19 59.39 57500 6;19 90.94 79800 1;19 41.3 45000 11;13 49.94 45800 15;13 45.9 40000 10;12 41.3 39800 9;11 45.55 38000 15;11 49.94 54000 14;11 49.94 50000 7;10 41.3 39400 3;10 49.94 49500 8;10 49.94 51000 14;08 49.94 44400 1;05 49.94 50000 6;04 41.3 35500 1;03 49.94 52000 8
+2601|30 59.39 55400 4;29 41.3 40800 8;17 45.9 39000 9;09 41.3 40000 5
+`,
+chungsol: `
+2110|15 49.5 68500 15
+2109|13 49.85 67500 7
+2108|28 59.46 74500 11;28 59.46 74700 9;28 59.46 74800 14;17 49.5 64500 4
+2107|10 39.92 57800 6;02 39.92 48000 1
+2106|26 49.5 65700 10;10 49.5 62800 11
+2105|27 39.92 48000 1;24 39.78 52500 4;11 39.78 48500 7;04 49.5 55000 6;03 39.92 50500 7
+2104|20 59.22 67000 3;19 39.78 45300 6;15 39.78 44700 8;04 49.5 58500 13;02 49.5 57900 14
+2103|19 49.85 57000 4;11 49.85 56500 13;06 39.78 46600 4;01 39.92 47500 12
+2102|14 49.85 56700 3;08 39.78 47000 11;06 39.78 47000 7
+2101|30 49.85 55500 11;29 39.92 41500 1;16 49.5 51700 10;15 59.22 61900 13
+2210|04 39.78 50000 6
+2209|22 49.85 55000 3
+2205|11 39.92 51200 1;10 49.5 61000 2;03 49.85 62000 4;03 49.5 64000 5
+2204|30 49.5 62400 7;29 59.7 69000 5;25 49.5 43000 15 D;15 39.78 57000 7
+2203|30 49.85 60500 4
+2202|26 39.78 53000 6
+2312|26 49.5 48000 8;11 39.92 40500 2
+2310|16 39.92 35500 1
+2309|26 49.5 50000 9;21 59.22 60000 8;18 59.22 54000 4;18 39.78 39000 11;12 39.78 39500 9;02 49.85 47500 2;01 49.5 47000 5
+2308|28 49.85 47000 15;25 49.5 48500 7;14 59.87 48000 5;12 59.7 53400 9;11 49.5 45000 7
+2307|21 49.5 45000 3;18 59.46 54500 6
+2306|07 49.5 46800 6
+2305|27 59.87 54000 6;11 49.5 40000 12 D
+2304|18 39.78 35000 9
+2303|27 49.5 47650 5;27 39.92 41200 15;16 49.5 45800 1;14 39.78 38200 8
+2412|26 39.78 33000 2;19 39.92 36500 2;14 49.5 48000 5
+2408|24 39.92 39500 9;24 49.5 51800 7;07 39.78 35000 9;06 39.78 42000 11
+2407|30 49.5 49500 3;15 39.78 38400 4;13 49.5 52000 9;10 39.78 38500 8;09 39.92 39000 10;05 39.78 38300 6
+2406|18 49.5 48800 5;17 39.78 35000 1;11 39.78 38250 3;06 49.85 44000 4;03 49.5 48000 9
+2405|14 49.5 43000 4;10 39.78 38500 3 D
+2403|25 59.87 57300 11;19 39.78 35000 12
+2402|29 39.92 37500 4;24 39.78 37500 10;23 49.5 42000 1
+2512|25 49.5 55000 13;16 39.92 40200 7;15 59.46 61500 3;13 49.5 48200 2
+2511|14 49.5 57500 15;14 39.92 37500 6;13 59.46 63000 11
+2510|15 49.5 37000 4;15 49.5 50800 7;01 59.22 60000 7
+2509|24 39.78 40000 11;21 39.92 39500 3;18 49.5 50800 4;15 59.22 62700 7;15 39.92 37000 6;12 49.5 48200 2;11 39.78 40000 10;10 49.5 48900 3
+2508|22 39.92 36000 15;15 39.78 36800 13;15 59.46 62000 11
+2507|19 39.92 35500 7
+2506|28 49.85 49000 6;26 39.92 38000 5;20 49.85 47700 11;16 39.92 34000 1;14 59.46 57200 4;12 39.78 37300 6;06 59.22 54500 1
+2505|31 39.92 36700 4;30 59.87 55500 9;29 59.22 55500 9;24 39.92 37500 12;23 39.78 35000 9;16 39.92 36400 4;15 39.92 38000 11;06 49.5 50000 5;03 39.78 37500 5
+2504|30 49.85 36000 8 D;28 49.85 48700 6;26 49.5 46700 13;25 39.78 38800 10;22 59.22 55000 10;21 49.5 46000 4;17 59.22 57000 5;14 49.85 50800 13;12 49.85 49500 4;12 49.5 48000 5;11 39.78 37000 12;11 49.5 47500 4
+2503|31 39.78 35000 6 D;07 39.92 37500 14
+2502|25 49.5 48000 4;01 39.92 38000 5
+2501|25 49.5 49000 7;13 49.5 47000 9
+2610|12 49.85 67500 9 D
+2609|28 39.92 50500 2
+2608|27 49.5 59700 1;25 39.78 58000 10;08 39.92 50000 5;05 49.5 59900 7
+2607|31 59.7 71000 5;31 49.85 64700 13;29 49.5 59300 1;29 39.78 45800 4;28 39.78 46500 6;27 49.5 63700 5;25 49.5 65700 3;20 49.85 59500 1;20 59.87 60700 1;11 49.5 58500 4;10 39.92 45000 14;03 49.5 60000 6
+2606|25 49.5 59500 2;18 39.78 44000 4;10 49.85 60000 1;10 49.5 60500 7;05 59.22 64750 13;04 49.85 59500 10;02 59.46 65000 4
+2605|30 39.78 46700 9;27 39.78 43000 2;21 49.5 53500 1;16 49.5 59900 9;15 39.92 42800 11;15 39.78 43300 6;13 49.85 58800 2;12 49.85 60000 14;09 39.78 43800 8;08 49.5 53000 3;05 39.92 42500 5;05 49.5 58700 7
+2604|29 49.5 58000 7;25 39.78 42500 6;24 49.5 55000 8;24 49.5 60000 6;23 49.5 58100 4;22 59.87 56100 1;11 49.5 56500 12;03 49.5 59000 13;03 49.85 57500 10
+2603|30 49.5 56500 6;30 49.85 59500 7;30 49.5 59200 9;30 49.5 60000 7;28 39.78 43000 12;12 49.5 60000 13
+2602|28 39.78 36300 1;23 39.92 42700 13;21 49.5 60000 7;21 39.92 42500 15;21 59.87 62800 13;14 49.5 59000 6;14 49.85 59000 4;13 49.85 56000 10;11 49.5 56000 7;11 49.5 52000 6;09 49.85 54100 13;07 49.5 54000 4;06 49.5 53500 6;06 49.85 54500 15;05 49.5 55000 10;05 59.87 54000 1
+2601|27 49.5 46800 2;24 49.5 44500 1;20 39.78 39000 5;17 39.92 38000 15;16 49.5 52700 4;09 39.92 40000 6;07 39.78 40000 6
+`
+};
+
+</script>
+<script>
+const ROWS = [{"d": "상계주공14단지", "f": "1425동 10층", "s": 60.52, "e": 45.9, "p": 5.1, "m": "샷시·중문 수리, 정상입주", "dup": "", "g": "⭐ 1순위"}, {"d": "상계주공14단지", "f": "1420동 8층", "s": 60.52, "e": 45.9, "p": 5.3, "m": "급매, 올수리, 12월 입주 희망", "dup": "", "g": "⭐ 1순위"}, {"d": "상계주공14단지", "f": "1421동 10층", "s": 60.52, "e": 45.9, "p": 5.5, "m": "주인용 올수리, 최상관리", "dup": "", "g": "⭐ 1순위"}, {"d": "상계주공14단지", "f": "1422동 6층(중층)", "s": 60.52, "e": 45.9, "p": 5.5, "m": "내부/부분 수리, 마들역", "dup": "2건(중층·6층 표기) 동일 추정", "g": "○ 후보"}, {"d": "상계주공14단지", "f": "1425동 저층", "s": 60.52, "e": 45.9, "p": 5.5, "m": "올수리, 숲세권", "dup": "", "g": "○ 후보"}, {"d": "상계주공10단지", "f": "1013동 저층", "s": 64.82, "e": 45.9, "p": 5.5, "m": "내부수리, 마들역 초역세권", "dup": "2건 동일 추정", "g": "⭐ 1순위"}, {"d": "상계주공9단지", "f": "920동 저층", "s": 64.82, "e": 45.9, "p": 5.6, "m": "올수리, 마들역", "dup": "", "g": "△ 예산 내·후순위"}, {"d": "상계주공9단지", "f": "907동 4층", "s": 64.82, "e": 45.9, "p": 5.8, "m": "주인용 올수리", "dup": "", "g": "△ 예산 내·후순위"}, {"d": "상계주공14단지", "f": "1424동 15층", "s": 60.07, "e": 45.55, "p": 5.9, "m": "올샷시, 정남향 B타입", "dup": "", "g": "△ 예산 내·후순위"}, {"d": "상계주공10단지", "f": "1001동 11층", "s": 64.82, "e": 45.9, "p": 6.0, "m": "올수리, 입주가능", "dup": "", "g": "△ 예산 내·후순위"}, {"d": "상계주공9단지", "f": "908동 4층", "s": 64.82, "e": 45.9, "p": 6.0, "m": "입주 매물, 더블역세권", "dup": "", "g": "△ 예산 내·후순위"}, {"d": "상계주공14단지", "f": "1404동 저층", "s": 58.76, "e": 41.3, "p": 5.2, "m": "급매, 1층 아님, 입주협의", "dup": "", "g": "⭐ 1순위"}, {"d": "상계주공14단지", "f": "1402동 10층", "s": 58.76, "e": 41.3, "p": 5.4, "m": "샷시교체, 로열동", "dup": "", "g": "⭐ 1순위"}, {"d": "상계주공14단지", "f": "1401동 12층", "s": 58.76, "e": 41.3, "p": 5.5, "m": "초입동", "dup": "", "g": "○ 후보"}, {"d": "상계주공1단지", "f": "116동 15층", "s": 59.53, "e": 41.3, "p": 5.7, "m": "올수리, 남향, 입주가능", "dup": "3건 동일 추정", "g": "△ 예산 내·후순위"}, {"d": "상계주공1단지", "f": "116동 9층", "s": 59.53, "e": 41.3, "p": 5.8, "m": "일부수리, 전망", "dup": "", "g": "△ 예산 내·후순위"}, {"d": "상계주공11단지", "f": "1111동 고층", "s": 58.18, "e": 41.3, "p": 5.8, "m": "수리, 남향 2베이", "dup": "", "g": "△ 예산 내·후순위"}, {"d": "상계주공9단지", "f": "917동 고층", "s": 58.41, "e": 41.3, "p": 5.85, "m": "전체 특올수리", "dup": "", "g": "△ 예산 내·후순위"}, {"d": "상계주공14단지", "f": "1404동 15층", "s": 58.76, "e": 41.3, "p": 5.9, "m": "올수리, 정남향", "dup": "", "g": "△ 예산 내·후순위"}, {"d": "상계주공14단지", "f": "1403동 7층", "s": 58.76, "e": 41.3, "p": 6.0, "m": "올샷시·욕실 특올수리", "dup": "", "g": "△ 예산 내·후순위"}, {"d": "상계주공9단지", "f": "917동 8층(중층)", "s": 58.41, "e": 41.3, "p": 6.0, "m": "올수리(샷시 포함), 입주가능", "dup": "3건(8층 2·중층 1) 동일 추정", "g": "△ 예산 내·후순위"}, {"d": "상계주공11단지", "f": "1101동 저층", "s": 58.18, "e": 41.3, "p": 6.0, "m": "올수리, 언제든 입주", "dup": "", "g": "△ 예산 내·후순위"}, {"d": "상계주공1단지", "f": "102동 저층", "s": 59.53, "e": 41.3, "p": 6.0, "m": "올수리, 입주가능", "dup": "", "g": "△ 예산 내·후순위"}, {"d": "상계주공1단지", "f": "103동 8층", "s": 59.53, "e": 41.3, "p": 6.0, "m": "샷시 포함 수리", "dup": "", "g": "△ 예산 내·후순위"}, {"d": "상계주공1단지", "f": "117동 14층", "s": 59.53, "e": 41.3, "p": 6.0, "m": "공원뷰, 11월 이후 입주", "dup": "117동 고층 6.1억과 동일호수인지 확인", "g": "△ 예산 내·후순위"}, {"d": "상계주공1단지", "f": "117동 고층", "s": 59.53, "e": 41.3, "p": 6.1, "m": "B형 구조, 전망", "dup": "117동 14층 6.0억과 동일호수인지 확인", "g": "⏳ 대기"}, {"d": "중계무지개", "f": "209동 2층", "s": 56.98, "e": 39.82, "p": 5.5, "m": "급매, 입주가능, 중계역 3분", "dup": "", "g": "○ 후보"}, {"d": "중계그린", "f": "103동 저층", "s": 56.12, "e": 39.78, "p": 6.0, "m": "재건축 추진위 승인(2026.8), 정밀안전진단 E등급", "dup": "재건축 속도는 목록 중 가장 앞섬", "g": "△ 예산 내·후순위"}, {"d": "상계주공14단지", "f": "1403동 저층", "s": 71.05, "e": 49.94, "p": 6.15, "m": "올수리", "dup": "", "g": "⏳ 대기"}, {"d": "상계주공14단지", "f": "1406동 8층", "s": 71.05, "e": 49.94, "p": 6.2, "m": "샷시·부분수리", "dup": "", "g": "⏳ 대기"}];
+const $ = id => document.getElementById(id);
+const NS="http://www.w3.org/2000/svg";
+function el(tag,attrs,text){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(text!=null)e.textContent=text;return e}
+const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fmtE = v => { if (v==null || isNaN(v)) return '–'; const e=Math.floor(v/10000), r=Math.round(v%10000); return e>0 ? (r ? `${e}억 ${r.toLocaleString()}` : `${e}억`) : `${r.toLocaleString()}만`; };
+const fmtShort = v => v==null ? '–' : (v/10000).toFixed(2).replace(/0$/,'')+'억';
+const median = a => { if(!a.length) return null; const s=[...a].sort((x,y)=>x-y), h=s.length>>1; return s.length%2? s[h] : (s[h-1]+s[h])/2; };
+const pyeong = m => (m/3.3058).toFixed(1);
+
+/* ===== 단지 정보 ===== */
+const COMPLEX = [
+  {id:'s14', name:'상계주공 14단지', color:'--s-s14', focus:true, far:'147%', stage:'추진준비위 · 신통 자문 동의서', info:{'지하철':'마들역','KB 41.3㎡':'5.2억','KB 45.9㎡':'5.0억'}},
+  {id:'s10', name:'상계주공 10단지', color:'--s-s10', far:'169%', stage:'신통 자문 신청 · 신탁 MOU', info:{'지하철':'마들역 초역세권','KB 45.9㎡':'5.6억','실거래':'데이터 없음'}},
+  {id:'s11', name:'상계주공 11단지', color:'--s-s11', far:'173%', stage:'안전진단 통과 · 신탁 MOU', info:{'지하철':'마들역'}},
+  {id:'s9',  name:'상계주공 9단지',  color:'--s-s9', far:'207%', stage:'정밀안전진단 통과', info:{'지하철':'마들역'}},
+  {id:'mujigae', name:'중계무지개', color:'--s-muj', far:'193%', stage:'확인 못 함', info:{'지하철':'중계역 도보 6분','세대수':'2,433'}},
+  {id:'chungsol', name:'하계 청솔', color:'--s-cs', far:null, stage:'재건축 단지', info:{'지하철':'7호선 하계역 (도보 확인 필요)','준공':'1989','세대수':'1,192','메모':'경춘선숲길'}},
+];
+const DATA_COMPLEX = COMPLEX.filter(c => window.RAW && RAW[c.id] && RAW[c.id].trim());
+const GROUPS = [
+  {id:'g17', label:'17평급', desc:'전용 39~41㎡', areas:{mujigae:[39.82,39.96], s9:[41.3], s11:[41.3], s14:[41.3], chungsol:[39.78,39.92]}},
+  {id:'g19', label:'19평급', desc:'전용 45㎡', areas:{s9:[45.55,45.9], s14:[45.55,45.9]}},
+  {id:'g21', label:'21평급', desc:'전용 49~50㎡', areas:{mujigae:[49.54,49.89], s9:[49.94], s11:[49.94], s14:[49.94], chungsol:[49.5,49.85]}},
+  {id:'g24', label:'24평급', desc:'전용 58~62㎡', areas:{mujigae:[59.26], s9:[58.01,61.52], s11:[58.01,59.2,59.28,59.39,60.5], s14:[59.39], chungsol:[59.22,59.46,59.7,59.87]}},
+  {id:'gL',  label:'중대형', desc:'전용 66㎡ 이상', areas:{s9:[66.56,79.07], s11:[68.86,79.07], s14:[71.89,84.41,90.94]}},
+];
+const RECENT_FROM = 202608;
+
+/* ===== 실거래 파싱 ===== */
+const DATA = {};
+for (const c of DATA_COMPLEX){
+  const rows=[];
+  RAW[c.id].trim().split('\n').forEach(line=>{
+    if (!line.includes('|')) return;
+    const [ym, recs] = line.split('|');
+    const y = 2000+ +ym.slice(0,2), m = +ym.slice(2,4);
+    recs.split(';').forEach(r=>{
+      const p = r.trim().split(/\s+/); if (p.length<4) return;
+      rows.push({y, m, d:+p[0], area:+p[1], price:+p[2], floor:+p[3], direct:p[4]==='D', ym:y*100+m, q:y*10+Math.ceil(m/3)});
+    });
+  });
+  rows.sort((a,b)=> (b.ym-a.ym) || (b.d-a.d));
+  DATA[c.id]=rows;
+}
+const LATEST = Math.max(...Object.values(DATA).flat().map(r=>r.ym));
+const ymAdd = (ym, k) => { let y=Math.floor(ym/100), m=ym%100 + k; while(m<1){m+=12;y--;} while(m>12){m-=12;y++;} return y*100+m; };
+const state = {group:'g17', metric:'price'};
+const ppy = r => r.price / (r.area/3.3058);
+const val = r => state.metric==='price' ? r.price : ppy(r);
+function filtered(cid, gid){
+  const g = GROUPS.find(x=>x.id===gid); const areas = g.areas[cid];
+  if (!areas || !DATA[cid]) return null;
+  return DATA[cid].filter(r => areas.includes(r.area) && !($('exD').checked && r.direct) && !($('ex1').checked && r.floor===1));
+}
+function stats(cid, gid){
+  const rows = filtered(cid, gid); if (!rows) return null;
+  const byQ = {}; rows.forEach(r=>{(byQ[r.q] ||= []).push(r.price);});
+  const qm = Object.entries(byQ).map(([q,a])=>({q:+q, v:median(a), n:a.length}));
+  const peak = qm.filter(o=>o.q<=20224 && o.n>=1).sort((a,b)=>b.v-a.v)[0];
+  const low = qm.filter(o=>o.q>=20231 && o.q<=20254 && o.n>=2).sort((a,b)=>a.v-b.v)[0];
+  let from = RECENT_FROM, rec = rows.filter(r=>r.ym>=from);
+  for (let k=3; rec.length<3 && k<=5; k++){ from = ymAdd(LATEST, -k); rec = rows.filter(r=>r.ym>=from); }
+  const recMed = median(rec.map(r=>r.price));
+  const y26 = rows.filter(r=>r.y===2026);
+  const max26 = y26.length ? y26.reduce((a,b)=>b.price>a.price?b:a) : null;
+  const areaAvg = rec.length ? rec.reduce((s,r)=>s+r.area,0)/rec.length : (rows[0]?.area||null);
+  return {rows, rec, recFrom: from, recMed, peak, low, max26, n26:y26.length, ppy: recMed && areaAvg ? recMed/(areaAvg/3.3058) : null, areas: GROUPS.find(g=>g.id===gid).areas[cid]};
+}
+const pct = (a,b)=> (a==null||b==null) ? '–' : ((a/b-1)*100);
+const pctHtml = v => v==='–' ? '–' : `<span class="${v>=0?'up':'down'}">${v>=0?'+':''}${v.toFixed(1)}%</span>`;
+const qLabel = k => `${String(Math.floor(k/10)).slice(2)}년 ${k%10}Q`;
+const QUARTERS = []; for (let y=2021;y<=2026;y++) for (let q=1;q<=4;q++){ const k=y*10+q; if (k<=20264) QUARTERS.push(k); }
+
+/* ===== 자금 ===== */
+const I = () => ({rate:+$('rate').value||0, years:+$('years').value||40, ltv:(+$('ltv').value||0)/100, cap:+$('cap').value||0, dsr:+$('dsr').value||0, cash:+$('cash').value||0});
+function payment(P, ratePct, years){ const i = ratePct/100/12, n = years*12; return i===0 ? P/n : P*i/(1-Math.pow(1+i,-n)); }
+function costs(price){ const rate = price<=60000 ? 0.01 : (price<=90000 ? (price/10000*2/3-3)/100 : 0.03); const acq = Math.max(0, price*rate*1.1 - 200); return acq + price*0.004*1.1 + 120; }
+function finance(price, kb){
+  const p=I(); const base = kb ? Math.min(price,kb) : price;
+  const bogeum = price <= 60000 && (!kb || kb <= 60000);
+  const loan = bogeum ? Math.min(base*p.ltv, p.cap) : Math.min(base*p.ltv, 60000, p.dsr);
+  const cost = costs(price), need = price + cost - loan;
+  return {bogeum, loan, cost, need, own: price-loan, left: p.cash-need, pay: payment(loan*10000, p.rate, p.years)/10000};
+}
+const leftHtml = l => l>=0 ? `<span class="ok">${fmtE(Math.round(l))} 남음</span>` : `<span class="no">${fmtE(Math.round(-l))} 부족</span>`;
+
+/* ===== 1순위 ===== */
+const TOP = [
+  {r:1, cid:'s14', apt:"상계주공14단지", u:"1404동 저층", p:52000, kb:52000, deal:55000, dealNote:"10/17 · 10층", s:58.76, e:41.3, far:147, memo:"급매, 1층 아님, 입주 협의", repair:"?", tenant:"?", floor:"✓"},
+  {r:2, cid:'s10', apt:"상계주공10단지", u:"1013동 저층", p:55000, kb:56000, deal:56000, dealNote:"10/23 · 9층", s:64.82, e:45.9, far:169, memo:"내부 수리, 마들역 초역세권", repair:"내부", tenant:"?", floor:"?"},
+  {r:3, cid:'s14', apt:"상계주공14단지", u:"1402동 10층", p:54000, kb:52000, deal:55000, dealNote:"10/17 · 10층", s:58.76, e:41.3, far:147, memo:"샷시 교체, 로열동", repair:"샷시", tenant:"?", floor:"✓"},
+  {r:4, cid:'s14', apt:"상계주공14단지", u:"1425동 10층", p:51000, kb:50000, deal:44600, dealNote:"9/10 · 6층", s:60.52, e:45.9, far:147, memo:"샷시·중문 수리, 정상 입주", repair:"샷시·중문", tenant:"✓", floor:"✓"},
+  {r:5, cid:'s14', apt:"상계주공14단지", u:"1420동 8층", p:53000, kb:50000, deal:44600, dealNote:"9/10 · 6층", s:60.52, e:45.9, far:147, memo:"급매, 올수리, 12월 입주 희망", repair:"올수리", tenant:"✓", floor:"✓"},
+  {r:6, cid:'s14', apt:"상계주공14단지", u:"1421동 10층", p:55000, kb:50000, deal:44600, dealNote:"9/10 · 6층", s:60.52, e:45.9, far:147, memo:"주인용 올수리, 최상 관리", repair:"올수리", tenant:"?", floor:"✓"},
+];
+function renderTop(){
+  const t=$('top-table');
+  let h=`<thead><tr><th>순위</th><th>아파트 · 동/층</th><th class="r">매매가</th><th class="r">KB 일반가</th><th class="r">KB와 차이</th><th class="r">최근 실거래</th><th>평형 / 전용</th><th class="r">대출</th><th class="r">필요 현금</th><th>가용 자금 대비</th><th class="r">월 상환</th><th>메모</th></tr></thead><tbody>`;
+  TOP.forEach(x=>{
+    const f=finance(x.p,x.kb), d=x.p-x.kb;
+    const pill=d<0?`<span class="pill p-good">−${(-d).toLocaleString()}만</span>`:d===0?`<span class="pill p-good">±0</span>`:`<span class="pill ${d>=3000?'p-bad':'p-warn'}">+${d.toLocaleString()}만</span>`;
+    h+=`<tr><td class="rank">${x.r}</td><td><span class="apt">${x.apt}</span><br><span class="muted small">${x.u}</span></td>
+    <td class="r num">${fmtE(x.p)}</td><td class="r num">${fmtE(x.kb)}</td><td class="r">${pill}</td>
+    <td class="r num">${fmtE(x.deal)}<br><span class="muted small">${x.dealNote}</span></td>
+    <td>${pyeong(x.s)}평형<br><span class="muted small">전용 ${pyeong(x.e)}평 (${x.e}㎡)</span></td>
+    <td class="r num">${fmtE(Math.round(f.loan))}</td><td class="r num"><b>${fmtE(Math.round(f.need))}</b></td><td>${leftHtml(f.left)}</td><td class="r num">${Math.round(f.pay).toLocaleString()}만</td>
+    <td class="wrapcell small">${x.memo}</td></tr>`;
+  });
+  t.innerHTML=h+"</tbody>";
+}
+function renderPriceChart(){
+  const W=520,rowH=40,top=26,left=150,right=24,H=top+TOP.length*rowH+30;
+  const min=4.2,max=6.2,x=v=>left+(v/10000-min)/(max-min)*(W-left-right);
+  const s=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"1순위 6건의 매매가, KB시세, 최근 실거래 비교"});
+  [4.2,4.6,5.0,5.4,5.8,6.2].forEach(v=>{s.appendChild(el("line",{x1:x(v*1e4),x2:x(v*1e4),y1:top-8,y2:H-26,stroke:"var(--line)"}));s.appendChild(el("text",{x:x(v*1e4),y:H-10,"text-anchor":"middle",class:"axis"},v.toFixed(1)+"억"))});
+  s.appendChild(el("line",{x1:x(60000),x2:x(60000),y1:top-14,y2:H-26,stroke:"var(--bad)","stroke-width":2,"stroke-dasharray":"4 3"}));
+  s.appendChild(el("text",{x:x(60000),y:top-18,"text-anchor":"middle",class:"axis",style:"fill:var(--bad)"},"6억 한도"));
+  TOP.forEach((t,i)=>{
+    const y=top+i*rowH+rowH/2;
+    s.appendChild(el("text",{x:0,y:y-3,class:"lbl"},`${t.r}. ${t.apt.replace("상계주공","")}`));
+    s.appendChild(el("text",{x:0,y:y+12,class:"axis"},t.u));
+    const lo=Math.min(t.p,t.kb,t.deal),hi=Math.max(t.p,t.kb,t.deal);
+    s.appendChild(el("line",{x1:x(lo),x2:x(hi),y1:y,y2:y,stroke:"var(--accent-2)","stroke-width":2,opacity:.5}));
+    s.appendChild(el("circle",{cx:x(t.deal),cy:y,r:5,fill:"var(--surface)",stroke:"var(--muted)","stroke-width":2}));
+    const kx=x(t.kb);s.appendChild(el("rect",{x:kx-5,y:y-5,width:10,height:10,fill:"var(--warn)",transform:`rotate(45 ${kx} ${y})`}));
+    s.appendChild(el("circle",{cx:x(t.p),cy:y,r:6,fill:"var(--accent)"}));
+    s.appendChild(el("text",{x:x(t.p),y:y-10,"text-anchor":"middle",class:"val"},(t.p/1e4).toFixed(2).replace(/0$/,"")));
+  });
+  $("ch-price").replaceChildren(s);
+}
+function renderCashChart(){
+  const W=520,rowH=40,top=10,left=150,right=78,H=top+TOP.length*rowH+30;
+  const max=60000,x=v=>left+v/max*(W-left-right);
+  const s=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"1순위 6건의 대출, 내 돈, 부대비용"});
+  for(let v=0;v<=60000;v+=10000){s.appendChild(el("line",{x1:x(v),x2:x(v),y1:top,y2:H-26,stroke:"var(--line)"}));s.appendChild(el("text",{x:x(v),y:H-10,"text-anchor":"middle",class:"axis"},v/1e4+"억"))}
+  TOP.forEach((t,i)=>{
+    const f=finance(t.p,t.kb),y=top+i*rowH+8,h=rowH-16;
+    s.appendChild(el("text",{x:0,y:y+h/2-2,class:"lbl"},`${t.r}. ${t.apt.replace("상계주공","")}`));
+    s.appendChild(el("text",{x:0,y:y+h/2+13,class:"axis"},t.u));
+    s.appendChild(el("rect",{x:x(0),y,width:x(f.loan)-x(0),height:h,fill:"var(--accent-soft)",stroke:"var(--accent-2)","stroke-width":1,rx:3}));
+    s.appendChild(el("rect",{x:x(f.loan),y,width:x(t.p)-x(f.loan),height:h,fill:"var(--accent)"}));
+    s.appendChild(el("rect",{x:x(t.p),y,width:Math.max(2,x(t.p+f.cost)-x(t.p)),height:h,fill:"var(--warn)"}));
+    s.appendChild(el("text",{x:(x(f.loan)+x(0))/2,y:y+h/2+4,"text-anchor":"middle",class:"val"},fmtShort(f.loan)));
+    s.appendChild(el("text",{x:x(t.p+f.cost)+6,y:y+h/2+4,class:"val",style:"font-weight:600"},"현금 "+fmtShort(f.need)));
+    const cx=x(f.loan+I().cash); if (cx<=W) s.appendChild(el("line",{x1:cx,x2:cx,y1:y-3,y2:y+h+3,stroke:"var(--bad)","stroke-width":2}));
+  });
+  $("ch-cash").replaceChildren(s);
+}
+function renderMatrix(){
+  const mark=v=>v==="✓"?'<span class="ok">✓</span>':v==="✗"?'<span class="no">✗</span>':v==="?"?'<span class="chk">?</span>':v;
+  let h=`<thead><tr><th>조건</th>${TOP.map(x=>`<th style="text-align:center">${x.r}. ${x.apt.replace("상계주공","")}<br><span class="muted small">${x.u}</span></th>`).join("")}</tr></thead><tbody>`;
+  const rows=[
+    ["매매가 6억 이하",x=>x.p<=60000?"✓":"✗"],
+    ["KB 일반가 6억 이하",x=>x.kb<=60000?"✓":"✗"],
+    ["매매가가 KB 이하",x=>x.p<=x.kb?"✓":"✗"],
+    ["최근 실거래 이하",x=>x.p<=x.deal?"✓":"✗"],
+    ["가용 자금 안",x=>finance(x.p,x.kb).left>=0?"✓":"✗"],
+    ["1층 아님",x=>x.floor],
+    ["세입자 없음",x=>x.tenant],
+    ["수리 상태",x=>x.repair==="?"?"?":`<span class="small">${x.repair}</span>`],
+    ["단지 용적률",x=>`<span class="num small">${x.far}%</span>`],
+  ];
+  rows.forEach(([n,f])=>{h+=`<tr><td>${n}</td>${TOP.map(x=>`<td>${mark(f(x))}</td>`).join("")}</tr>`});
+  $("matrix").innerHTML=h+"</tbody>";
+}
+
+/* ===== 단지 카드 ===== */
+function renderCards(){
+  $('cards').innerHTML = COMPLEX.map(c=>{
+    const st = DATA[c.id] ? stats(c.id, 'g17') : null;
+    const rec = st ? st.rec.map(r=>r.price) : [];
+    const areas = DATA[c.id] ? [...new Set(DATA[c.id].map(r=>r.area))].sort((a,b)=>a-b) : [];
+    const info = Object.entries(c.info).map(([k,v])=>`<dt>${k}</dt><dd>${v ?? '<span class="todo">입력 대기</span>'}</dd>`).join('');
+    return `<div class="cx ${c.focus?'focus':''}">
+      <div class="name"><span class="sw" style="background:var(${c.color})"></span>${c.name}${c.focus?' <span class="tag">1순위</span>':''}</div>
+      <div class="big">${rec.length? fmtE(median(rec)) : '–'}</div>
+      <div class="bigl">${DATA[c.id] ? `17평급 최근 시세 (${st && st.recFrom<RECENT_FROM ? (st.recFrom%100)+'~10월' : '8~10월'} 중위, ${rec.length}건)` : '실거래 데이터 없음'}</div>
+      <dl><dt>용적률</dt><dd>${c.far ?? '<span class="todo">확인 필요</span>'}</dd><dt>재건축</dt><dd>${c.stage}</dd>${info}${areas.length?`<dt>전용</dt><dd>${areas.join(' · ')}㎡</dd>`:''}</dl>
+    </div>`;
+  }).join('');
+}
+
+/* ===== 실거래 차트 ===== */
+function renderChart(){
+  const svg = $('chart'), W=1000, H=380, m={l:62,r:96,t:14,b:34};
+  const g = GROUPS.find(x=>x.id===state.group);
+  $('chartTitle').textContent = `${g.label} (${g.desc}) ${state.metric==='price'?'거래가':'전용 3.3㎡당 가격'} 추이`;
+  const series = DATA_COMPLEX.map(c=>{
+    const rows = filtered(c.id, state.group); if (!rows) return null;
+    const byQ = {}; rows.forEach(r=>{(byQ[r.q] ||= []).push(val(r));});
+    const pts = QUARTERS.map(q=> byQ[q] ? {q, v:median(byQ[q]), n:byQ[q].length} : null);
+    return {c, rows, pts};
+  }).filter(Boolean);
+  $('legend').innerHTML = series.map(s=>`<span><span class="sw" style="background:var(${s.c.color})"></span>${s.c.name}</span>`).join('')
+    + DATA_COMPLEX.filter(c=>!series.find(s=>s.c===c)).map(c=>`<span class="muted">${c.name}: 해당 평형 없음</span>`).join('');
+  const allV = series.flatMap(s=>s.rows.map(val));
+  if (!allV.length){ svg.innerHTML=''; return; }
+  let lo = Math.min(...allV), hi = Math.max(...allV);
+  const step = state.metric==='price' ? (hi-lo>40000?10000:5000) : 500;
+  lo = Math.floor(lo/step)*step; hi = Math.ceil(hi/step)*step;
+  const x = i => m.l + (W-m.l-m.r) * i/(QUARTERS.length-1);
+  const xq = q => x(QUARTERS.indexOf(q));
+  const y = v => m.t + (H-m.t-m.b) * (1-(v-lo)/(hi-lo));
+  let out = '';
+  for (let v=lo; v<=hi+1; v+=step){
+    out += `<line x1="${m.l}" x2="${W-m.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width="1"/>`;
+    const lab = state.metric==='price' ? fmtShort(v) : (v/1000).toFixed(1)+'천';
+    out += `<text x="${m.l-8}" y="${y(v)+4}" text-anchor="end" font-size="11" class="axis">${lab}</text>`;
+  }
+  if (state.metric==='price' && lo<=60000 && hi>=60000) out += `<line x1="${m.l}" x2="${W-m.r}" y1="${y(60000)}" y2="${y(60000)}" stroke="var(--bad)" stroke-width="1.5" stroke-dasharray="5 4"/><text x="${m.l+6}" y="${y(60000)-5}" font-size="11" style="fill:var(--bad)">보금자리 6억</text>`;
+  for (let yr=2021; yr<=2026; yr++){
+    const xi = xq(yr*10+1);
+    out += `<line x1="${xi}" x2="${xi}" y1="${m.t}" y2="${H-m.b}" stroke="var(--line)" stroke-width="1" stroke-dasharray="2 3"/>`;
+    out += `<text x="${xi+4}" y="${H-m.b+18}" font-size="11.5" class="axis">${yr}</text>`;
+  }
+  out += `<line x1="${m.l}" x2="${W-m.r}" y1="${H-m.b}" y2="${H-m.b}" stroke="var(--axis)"/>`;
+  series.forEach(s=>{ s.rows.forEach(r=>{ const qi = QUARTERS.indexOf(r.q); if (qi<0) return;
+    const frac = (((r.m-1)%3)*30 + r.d)/90 - 0.5; const cx = x(qi) + frac*(W-m.l-m.r)/(QUARTERS.length-1);
+    out += `<circle cx="${cx.toFixed(1)}" cy="${y(val(r)).toFixed(1)}" r="2.2" fill="var(${s.c.color})" opacity=".22"/>`; }); });
+  const labels = [];
+  series.forEach(s=>{
+    let solid='', dash='', prev=null;
+    s.pts.forEach((p,i)=>{ if(!p) return; const X=x(i).toFixed(1), Y=y(p.v).toFixed(1);
+      if (prev){ const seg=`M${x(prev.i).toFixed(1)} ${y(prev.p.v).toFixed(1)}L${X} ${Y} `; if (i-prev.i===1) solid+=seg; else dash+=seg; }
+      prev={i,p}; });
+    const sw = s.c.focus?2.75:2;
+    out += `<path d="${solid}" fill="none" stroke="var(--surface)" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>`;
+    out += `<path d="${dash}" fill="none" stroke="var(${s.c.color})" stroke-width="1.5" stroke-dasharray="3 4" opacity=".7"/>`;
+    out += `<path d="${solid}" fill="none" stroke="var(${s.c.color})" stroke-width="${sw}" stroke-linejoin="round" stroke-linecap="round"/>`;
+    s.pts.forEach((p,i)=>{ if(p) out += `<circle cx="${x(i).toFixed(1)}" cy="${y(p.v).toFixed(1)}" r="3" fill="var(${s.c.color})" stroke="var(--surface)" stroke-width="1.5"><title>${s.c.name} ${qLabel(p.q)}: ${state.metric==='price'?fmtE(p.v):Math.round(p.v).toLocaleString()+'만'} (${p.n}건)</title></circle>`; });
+    const last = [...s.pts].reverse().find(Boolean);
+    if (last) labels.push({y:y(last.v), x:xq(last.q), name:s.c.name.replace('상계주공 ',''), color:s.c.color, v:last.v});
+  });
+  labels.sort((a,b)=>a.y-b.y);
+  for (let i=1;i<labels.length;i++) if (labels[i].y - labels[i-1].y < 14) labels[i].y = labels[i-1].y + 14;
+  labels.forEach(l=>{
+    out += `<circle cx="${l.x}" cy="${y(l.v)}" r="4" fill="var(${l.color})" stroke="var(--surface)" stroke-width="2"/>`;
+    out += `<rect x="${W-m.r+8}" y="${l.y-4}" width="8" height="8" rx="2" fill="var(${l.color})"/>`;
+    out += `<text x="${W-m.r+20}" y="${l.y+4}" font-size="11.5">${l.name}</text>`;
+  });
+  out += `<line id="xh" x1="0" x2="0" y1="${m.t}" y2="${H-m.b}" stroke="var(--axis)" stroke-width="1" visibility="hidden"/>`;
+  out += `<rect id="hit" x="${m.l}" y="${m.t}" width="${W-m.l-m.r}" height="${H-m.t-m.b}" fill="transparent"/>`;
+  svg.innerHTML = out;
+  const tip = $('tip'), hit = svg.querySelector('#hit'), xh = svg.querySelector('#xh');
+  const move = ev => {
+    const pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY;
+    const p = pt.matrixTransform(svg.getScreenCTM().inverse());
+    const i = Math.max(0, Math.min(QUARTERS.length-1, Math.round((p.x-m.l)/((W-m.l-m.r)/(QUARTERS.length-1)))));
+    xh.setAttribute('x1', x(i)); xh.setAttribute('x2', x(i)); xh.setAttribute('visibility','visible');
+    const rows = series.map(s=>{ const pp=s.pts[i]; return `<div class="r"><span><span class="sw" style="background:var(${s.c.color})"></span> ${s.c.name}</span><b>${pp? (state.metric==='price'?fmtE(pp.v):Math.round(pp.v).toLocaleString()+'만') + ` <span class="muted">(${pp.n}건)</span>` : '<span class="muted">거래 없음</span>'}</b></div>`; }).join('');
+    tip.innerHTML = `<div class="t">${qLabel(QUARTERS[i])} 중위값</div>${rows}`;
+    tip.hidden = false;
+    const box = $('chartbox').getBoundingClientRect();
+    let left = ev.clientX - box.left + 14; if (left + tip.offsetWidth > box.width) left = Math.max(0, ev.clientX - box.left - tip.offsetWidth - 14);
+    tip.style.left = left+'px'; tip.style.top = Math.max(0, ev.clientY - box.top - 40)+'px';
+  };
+  hit.addEventListener('mousemove', move);
+  hit.addEventListener('touchstart', e=>move(e.touches[0]), {passive:true});
+  hit.addEventListener('mouseleave', ()=>{ tip.hidden = true; xh.setAttribute('visibility','hidden'); });
+}
+function renderTable(){
+  const g = GROUPS.find(x=>x.id===state.group);
+  $('tblGroup').textContent = `${g.label} · ${g.desc}`;
+  let h = `<thead><tr><th>단지</th><th>전용면적</th><th class="r">최근 시세</th><th class="r">2026 최고가</th><th class="r">전고점 (21~22)</th><th class="r">전고점 대비</th><th class="r">저점 (23~25)</th><th class="r">저점 대비</th><th class="r">전용 3.3㎡당</th><th class="r">2026 거래</th></tr></thead><tbody>`;
+  DATA_COMPLEX.forEach(c=>{
+    const s = stats(c.id, state.group);
+    if (!s){ h += `<tr><td><span class="sw" style="background:var(${c.color})"></span> ${c.name}</td><td colspan="9" class="muted">해당 평형 없음</td></tr>`; return; }
+    h += `<tr><td><span class="sw" style="background:var(${c.color})"></span> ${c.focus?'<b>'+c.name+'</b>':c.name}</td><td>${s.areas.join(', ')}㎡</td>
+      <td class="r"><b>${fmtE(s.recMed)}</b> <span class="muted">(${s.rec.length}건${s.recFrom<RECENT_FROM?', '+(s.recFrom%100)+'월~':''})</span></td>
+      <td class="r">${s.max26? fmtE(s.max26.price)+` <span class="muted">${s.max26.m}월 ${s.max26.floor}층</span>`:'–'}</td>
+      <td class="r">${s.peak? fmtE(s.peak.v)+` <span class="muted">${qLabel(s.peak.q)}</span>`:'–'}</td><td class="r">${pctHtml(pct(s.recMed, s.peak?.v))}</td>
+      <td class="r">${s.low? fmtE(s.low.v)+` <span class="muted">${qLabel(s.low.q)}</span>`:'–'}</td><td class="r">${pctHtml(pct(s.recMed, s.low?.v))}</td>
+      <td class="r num">${s.ppy? Math.round(s.ppy).toLocaleString()+'만':'–'}</td><td class="r num">${s.n26}건</td></tr>`;
+  });
+  $('tbl').innerHTML = h+'</tbody>';
+}
+function renderLoan(){
+  const g = GROUPS.find(x=>x.id===state.group);
+  $('loanGroup').textContent = `${g.label} 최근 시세 기준`;
+  let h = `<thead><tr><th>단지</th><th class="r">매매가 (최근 시세)</th><th>대출 상품</th><th class="r">대출액</th><th class="r">부대비용</th><th class="r">필요 현금</th><th>가용 자금 대비</th><th class="r">월 상환액</th></tr></thead><tbody>`;
+  DATA_COMPLEX.forEach(c=>{
+    const s = stats(c.id, state.group);
+    if (!s || !s.recMed){ h += `<tr><td><span class="sw" style="background:var(${c.color})"></span> ${c.name}</td><td colspan="7" class="muted">${s?'최근 거래 없음':'해당 평형 없음'}</td></tr>`; return; }
+    const price = Math.round(s.recMed/100)*100, f = finance(price);
+    h += `<tr><td><span class="sw" style="background:var(${c.color})"></span> ${c.focus?'<b>'+c.name+'</b>':c.name}</td><td class="r">${fmtE(price)}</td>
+      <td>${f.bogeum?'<span class="ok">보금자리론</span>':'<span class="warn">은행 (DSR)</span>'}</td><td class="r">${fmtE(Math.round(f.loan))}</td><td class="r">${fmtE(Math.round(f.cost))}</td>
+      <td class="r"><b>${fmtE(Math.round(f.need))}</b></td><td>${leftHtml(f.left)}</td><td class="r num">${Math.round(f.pay).toLocaleString()}만 원</td></tr>`;
+  });
+  $('loan').innerHTML = h+'</tbody>';
+}
+function renderRecent(){
+  const g = GROUPS.find(x=>x.id===state.group);
+  $('recentGroup').textContent = `${g.label} · 최근 20건`;
+  const all = DATA_COMPLEX.flatMap(c=> (filtered(c.id, state.group)||[]).map(r=>({...r, c})));
+  all.sort((a,b)=>(b.ym-a.ym)||(b.d-a.d));
+  let h = `<thead><tr><th>계약일</th><th>단지</th><th class="r">전용</th><th class="r">층</th><th class="r">거래가</th><th class="r">전용 3.3㎡당</th></tr></thead><tbody>`;
+  all.slice(0,20).forEach(r=>{
+    h += `<tr><td class="num">${r.y}.${String(r.m).padStart(2,'0')}.${String(r.d).padStart(2,'0')}</td><td><span class="sw" style="background:var(${r.c.color})"></span> ${r.c.name}</td>
+      <td class="r">${r.area}㎡</td><td class="r">${r.floor}층</td><td class="r"><b>${fmtE(r.price)}</b>${r.direct?' <span class="pill p-grey">직거래</span>':''}</td><td class="r num">${Math.round(ppy(r)).toLocaleString()}만</td></tr>`;
+  });
+  $('recent').innerHTML = h+'</tbody>';
+}
+
+/* ===== 매물 평가 ===== */
+const KEY='nowon_listings_v1';
+const SEED = [
+  {cid:'s14', area:41.3, dong:'1404', floor:3, price:52000, repair:0, memo:'1순위 · 저층(실제 층 확인) · 급매 · 입주 협의'},
+  {cid:'s14', area:41.3, dong:'1402', floor:10, price:54000, repair:1000, memo:'1순위 · 샷시 교체 · 로열동'},
+  {cid:'s14', area:45.9, dong:'1425', floor:10, price:51000, repair:1000, memo:'1순위 · 샷시·중문 수리 · 정상 입주'},
+  {cid:'s14', area:45.9, dong:'1420', floor:8, price:53000, repair:2500, memo:'1순위 · 급매 올수리 · 12월 입주 희망'},
+  {cid:'s14', area:45.9, dong:'1421', floor:10, price:55000, repair:2500, memo:'1순위 · 주인용 올수리'},
+  {cid:'s14', area:41.3, dong:'1401', floor:12, price:55000, repair:0, memo:'후보 · 초입동'},
+  {cid:'mujigae', area:39.82, dong:'209', floor:2, price:55000, repair:0, memo:'후보 · 급매 · 중계역 3분 (전용 39.82㎡로 가정)'},
+  {cid:'s14', area:49.94, dong:'1403', floor:3, price:61500, repair:2500, memo:'대기 · 6억 초과 · 저층 올수리'},
+];
+let LIST;
+try { const s = localStorage.getItem(KEY); LIST = s ? JSON.parse(s) : SEED.map(o=>({...o})); } catch(e){ LIST = SEED.map(o=>({...o})); }
+const saveList = ()=> { try { localStorage.setItem(KEY, JSON.stringify(LIST)); } catch(e){} };
+const groupOf = (cid, area) => GROUPS.find(g => (g.areas[cid]||[]).includes(area));
+function comps(cid, area){
+  const g = groupOf(cid, area); const areas = g ? g.areas[cid] : [area];
+  const base = (DATA[cid]||[]).filter(r=>areas.includes(r.area) && !r.direct && r.floor!==1);
+  for (let k=1;k<=5;k++){ const from = ymAdd(LATEST, -k); const c = base.filter(r=>r.ym>=from); if (c.length>=4 || k===5) return {c, from, g}; }
+}
+function evaluate(L){
+  const {c, from, g} = comps(L.cid, L.area);
+  const bench = median(c.map(r=>r.price));
+  const fAdj = L.floor===1 ? 0.92 : (L.floor<=3 ? 0.97 : 1);
+  const fair = bench==null ? null : bench*fAdj + (+L.repair);
+  const ratio = fair ? L.price/fair : null;
+  let v = '–', cls='';
+  if (ratio!=null){ if (ratio<=0.96){v='잘 산 가격';cls='ok';} else if (ratio<=1.02){v='적정';cls='';} else if (ratio<=1.05){v='약간 비쌈';cls='warn';} else {v='비쌈';cls='no';} }
+  const st = g ? stats(L.cid, g.id) : null;
+  return {c, from, bench, fair, ratio, v, cls, target: fair? Math.round(fair*0.97/500)*500 : null, peak: st?.peak?.v ?? null,
+          min: c.length?Math.min(...c.map(r=>r.price)):null, max: c.length?Math.max(...c.map(r=>r.price)):null};
+}
+function renderListings(){
+  if (!LIST.length){ $('lt').innerHTML = '<tbody><tr><td class="muted" style="padding:14px 12px">위에서 매물을 입력하고 [추가]를 누르면 평가 결과가 여기에 표시됩니다.</td></tr></tbody>'; return; }
+  let h = `<thead><tr><th>매물</th><th class="r">호가</th><th class="r">비교 거래</th><th class="r">적정가</th><th>판정</th><th class="r">협상 목표</th><th class="r">전고점 대비</th><th class="r">대출</th><th class="r">필요 현금</th><th class="r">월 상환</th><th><span class="muted">삭제</span></th></tr></thead><tbody>`;
+  LIST.forEach((L,idx)=>{
+    const c = COMPLEX.find(x=>x.id===L.cid); if (!c || !DATA[L.cid]) return;
+    const e = evaluate(L), f = finance(L.price);
+    const fromTxt = `${String(Math.floor(e.from/100)).slice(2)}.${String(e.from%100).padStart(2,'0')}~`;
+    const rep = {0:'기본',1000:'부분수리',2500:'올수리'}[L.repair] || '기본';
+    h += `<tr><td><span class="sw" style="background:var(${c.color})"></span> <b>${c.name.replace('상계주공 ','')}</b> ${L.area}㎡ ${L.dong?esc(L.dong)+'동 ':''}${L.floor}층 <span class="pill p-grey">${rep}</span>${L.memo?`<div class="muted small">${esc(L.memo)}</div>`:''}</td>
+      <td class="r"><b>${fmtE(L.price)}</b></td>
+      <td class="r">${e.c.length}건 <span class="muted">${fromTxt}</span><div class="muted small">${e.min?fmtShort(e.min)+'~'+fmtShort(e.max):''}</div></td>
+      <td class="r">${fmtE(e.fair? Math.round(e.fair/100)*100 : null)}<div class="muted small">${e.ratio?'호가 '+(e.ratio*100).toFixed(0)+'%':''}</div></td>
+      <td><span class="verdictpill ${e.cls}">${e.v}</span>${e.c.length<4?'<div class="muted small">거래 적음</div>':''}</td>
+      <td class="r">${fmtE(e.target)}</td><td class="r">${e.peak? pctHtml(pct(L.price, e.peak)) : '–'}</td>
+      <td class="r">${f.bogeum?'<span class="ok">보금자리</span>':'<span class="warn">은행</span>'} ${fmtE(Math.round(f.loan))}</td>
+      <td class="r">${fmtE(Math.round(f.need))}<div class="small">${leftHtml(f.left)}</div></td>
+      <td class="r num">${Math.round(f.pay).toLocaleString()}만</td>
+      <td><button type="button" class="del" data-i="${idx}" aria-label="이 매물 삭제">✕</button></td></tr>`;
+  });
+  $('lt').innerHTML = h+'</tbody>';
+}
+function fillAreas(){
+  const cid = $('lfC').value;
+  const areas = [...new Set(DATA[cid].map(r=>r.area))].sort((a,b)=>a-b);
+  $('lfA').innerHTML = areas.map(a=>{ const g=groupOf(cid,a); return `<option value="${a}">${a}㎡${g?' ('+g.label+')':''}</option>`; }).join('');
+}
+$('lfC').innerHTML = DATA_COMPLEX.map(c=>`<option value="${c.id}">${c.name}</option>`).join('');
+fillAreas();
+$('lfC').addEventListener('change', fillAreas);
+$('lfAdd').addEventListener('click', ()=>{
+  const price=+$('lfP').value, floor=+$('lfF').value;
+  if (!price || !floor){ $('lfMsg').textContent='층과 호가를 입력해 주세요.'; return; }
+  $('lfMsg').textContent='';
+  LIST.push({cid:$('lfC').value, area:+$('lfA').value, dong:$('lfD').value.trim(), floor, price, repair:+$('lfR').value, memo:$('lfM').value.trim()});
+  saveList(); ['lfP','lfF','lfD','lfM'].forEach(id=>$(id).value=''); renderListings();
+});
+$('lfReset').addEventListener('click', ()=>{ LIST = SEED.map(o=>({...o})); saveList(); $('lfMsg').textContent=''; renderListings(); });
+$('lt').addEventListener('click', e=>{ const b=e.target.closest('.del'); if(!b) return; LIST.splice(+b.dataset.i,1); saveList(); renderListings(); });
+
+/* ===== 재건축 지표 ===== */
+const REB = [
+  {n:"상계주공14단지", far:147, land:"13.7평", stage:2, st:"추진준비위 · 신통 자문 동의서 접수", extra:"360%로 상향 계획 · 2,265 → 3,826가구 · 비례율 111%(추정)"},
+  {n:"상계주공10단지", far:169, land:"13.4평", stage:2, st:"신통 자문 신청(2025.7) · 신탁 MOU", extra:"약 4,000가구 · 종상향 검토"},
+  {n:"상계주공11단지", far:173, land:"미확인", stage:1, st:"안전진단 통과(2023.12) · 신탁 MOU", extra:"계획 용적률 354.15%"},
+  {n:"중계그린", far:191, land:"미확인", stage:3, st:"추진위 승인(2026.8) · 신통 현장 자문", extra:"3,481가구 · 정밀안전진단 E등급"},
+  {n:"중계무지개", far:193, land:"미확인", stage:0, st:"확인 못 함", extra:"2,433가구"},
+  {n:"상계주공9단지", far:207, land:"미확인", stage:2, st:"정밀안전진단 통과 · 신통 동의서", extra:"용적률이 가장 높음"},
+  {n:"상계주공1단지", far:null, land:"미확인", stage:0, st:"확인 못 함", extra:""},
+];
+(function(){
+  const data=REB.filter(c=>c.far);
+  const W=520,rowH=34,top=8,left=120,right=50,H=top+data.length*rowH+26;
+  const max=220,x=v=>left+v/max*(W-left-right);
+  const s=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"단지별 지금 용적률"});
+  [0,50,100,150,200].forEach(v=>{s.appendChild(el("line",{x1:x(v),x2:x(v),y1:top,y2:H-22,stroke:"var(--line)"}));s.appendChild(el("text",{x:x(v),y:H-6,"text-anchor":"middle",class:"axis"},v+"%"))});
+  data.forEach((c,i)=>{
+    const y=top+i*rowH+6,h=rowH-12,hit=c.n==="상계주공14단지"||c.n==="상계주공10단지";
+    s.appendChild(el("text",{x:0,y:y+h/2+4,class:"lbl",style:hit?"font-weight:600":""},c.n));
+    s.appendChild(el("rect",{x:x(0),y,width:x(c.far)-x(0),height:h,rx:3,fill:hit?"var(--accent)":"var(--grey)"}));
+    s.appendChild(el("text",{x:x(c.far)+6,y:y+h/2+4,class:"val"},c.far+"%"));
+  });
+  $("ch-far").appendChild(s);
+  const names=["안전진단","신통 자문·동의","추진위 승인","정비구역 지정"];
+  let h=`<thead><tr><th>단지</th><th>진행</th><th>평균 대지지분</th><th>확인된 내용</th></tr></thead><tbody>`;
+  REB.forEach(c=>{
+    const bars=names.map((n,i)=>`<i class="${i<c.stage?'on':''}" title="${n}"></i>`).join("");
+    h+=`<tr><td class="apt">${c.n}</td><td><span class="stage" aria-label="4단계 중 ${c.stage}단계">${bars}</span></td><td class="num small">${c.land}</td><td class="wrapcell small">${c.st}${c.extra?`<br><span class="muted">${c.extra}</span>`:""}</td></tr>`;
+  });
+  $("stage-table").innerHTML=h+`</tbody>`;
+  $("stage-table").insertAdjacentHTML("afterend",`<p class="note">막대 4칸: ${names.join(" → ")}</p>`);
+})();
+
+/* ===== 전체 매물 ===== */
+const GRADES=[["⭐ 1순위","g-top","var(--accent)"],["○ 후보","g-cand","var(--blue)"],["△ 예산 내·후순위","g-low","var(--grey)"],["⏳ 대기","g-wait","var(--warn)"]];
+const gColor=g=>(GRADES.find(x=>x[0]===g)||GRADES[2])[2];
+const gClass=g=>(GRADES.find(x=>x[0]===g)||GRADES[2])[1];
+(function(){
+  $("strip-legend").innerHTML=GRADES.map(g=>`<span><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><circle cx="6" cy="6" r="5" fill="${g[2]}"/></svg>${g[0].replace(/^\S+ /,"")}</span>`).join("");
+  const types=[...new Set(ROWS.map(r=>pyeong(r.e)))].sort((a,b)=>b-a);
+  const W=560,rowH=56,top=24,left=96,right=20,H=top+types.length*rowH+28;
+  const min=5.0,max=6.3,x=v=>left+(v-min)/(max-min)*(W-left-right);
+  const s=el("svg",{viewBox:`0 0 ${W} ${H}`,role:"img","aria-label":"전체 매물의 가격을 전용면적별로 표시"});
+  [5.0,5.25,5.5,5.75,6.0,6.25].forEach(v=>{s.appendChild(el("line",{x1:x(v),x2:x(v),y1:top-6,y2:H-24,stroke:"var(--line)"}));s.appendChild(el("text",{x:x(v),y:H-8,"text-anchor":"middle",class:"axis"},v+"억"))});
+  s.appendChild(el("line",{x1:x(6),x2:x(6),y1:top-12,y2:H-24,stroke:"var(--bad)","stroke-width":2,"stroke-dasharray":"4 3"}));
+  s.appendChild(el("text",{x:x(6),y:top-16,"text-anchor":"middle",class:"axis",style:"fill:var(--bad)"},"6억"));
+  types.forEach((tp,i)=>{
+    const yc=top+i*rowH+rowH/2;
+    s.appendChild(el("text",{x:0,y:yc-2,class:"lbl"},`전용 ${tp}평`));
+    s.appendChild(el("text",{x:0,y:yc+13,class:"axis"},`${ROWS.find(r=>pyeong(r.e)===tp).e}㎡ · ${ROWS.filter(r=>pyeong(r.e)===tp).length}건`));
+    const seen={};
+    ROWS.filter(r=>pyeong(r.e)===tp).sort((a,b)=>a.p-b.p).forEach(r=>{
+      const k=r.p.toFixed(2);seen[k]=(seen[k]||0)+1;
+      const n=seen[k]-1,off=(n%2?1:-1)*Math.ceil(n/2)*11;
+      const c=el("circle",{cx:x(r.p),cy:yc+off,r:5.5,fill:gColor(r.g),stroke:"var(--surface)","stroke-width":1.5});
+      c.appendChild(el("title",{},`${r.d} ${r.f} · ${r.p}억 · ${r.g}`));
+      s.appendChild(c);
+    });
+  });
+  $("ch-strip").appendChild(s);
+  const fb=$("filters"), opts=["전체",...GRADES.map(g=>g[0])];
+  let cur="전체";
+  try{const v=localStorage.getItem("cmp-filter");if(opts.includes(v))cur=v}catch(e){}
+  function draw(){
+    fb.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===cur));
+    const list=ROWS.filter(r=>cur==="전체"||r.g===cur).sort((a,b)=>a.p-b.p||a.e-b.e);
+    $("all-table").innerHTML=`<thead><tr><th>판정</th><th>아파트 · 동/층</th><th class="r">가격</th><th>평형 / 전용</th><th class="r">전용 평당</th><th>메모</th></tr></thead><tbody>`+
+      list.map(r=>`<tr><td><span class="pill ${gClass(r.g)}">${r.g.replace(/^\S+ /,"")}</span></td><td><span class="apt">${r.d}</span><br><span class="muted small">${r.f}</span></td><td class="r num">${r.p}억</td><td>${pyeong(r.s)}평형<br><span class="muted small">전용 ${pyeong(r.e)}평 (${r.e}㎡)</span></td><td class="r num">${Math.round(r.p*10000/(r.e/3.3058)).toLocaleString("ko-KR")}만</td><td class="wrapcell small">${r.m}${r.dup?`<br><span class="muted">${r.dup}</span>`:""}</td></tr>`).join("")+`</tbody>`;
+  }
+  fb.innerHTML=opts.map((o,i)=>`<button type="button" id="f-${i}" data-v="${o}">${o==="전체"?`전체 ${ROWS.length}`:`${o.replace(/^\S+ /,"")} ${ROWS.filter(r=>r.g===o).length}`}</button>`).join("");
+  fb.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;cur=b.dataset.v;try{localStorage.setItem("cmp-filter",cur)}catch(e){}draw()});
+  draw();
+})();
+
+/* ===== 연결 ===== */
+function renderMarket(){ renderCards(); renderChart(); renderTable(); renderLoan(); renderRecent(); renderListings(); }
+function renderMoney(){ renderTop(); renderCashChart(); renderMatrix(); renderLoan(); renderListings(); }
+$('groupSeg').innerHTML = GROUPS.map(g=>`<button type="button" data-g="${g.id}" class="${g.id===state.group?'on':''}">${g.label}</button>`).join('');
+$('groupSeg').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; state.group=b.dataset.g; [...$('groupSeg').children].forEach(x=>x.classList.toggle('on',x===b)); renderMarket(); });
+$('metricSeg').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; state.metric=b.dataset.m; [...$('metricSeg').children].forEach(x=>x.classList.toggle('on',x===b)); renderChart(); });
+['exD','ex1'].forEach(id=>$(id).addEventListener('change', renderMarket));
+['rate','years','ltv','cap','cash','dsr'].forEach(id=>$(id).addEventListener('input', renderMoney));
+renderPriceChart(); renderMoney(); renderMarket();
+</script>
