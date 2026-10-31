@@ -154,12 +154,13 @@ label.ck{font-size:.85rem;color:var(--muted);display:inline-flex;gap:5px;align-i
 <section class="verdict" aria-labelledby="v-h">
   <h2 id="v-h">한 줄 결론</h2>
   <p>상계주공14단지는 <b>전용 41.3㎡(12.5평) 실거래가 10월에 5.25~5.6억으로 올랐고, 45.9㎡(13.9평)는 최근 중위값이 4.7억대(4.46~5.27억)에 머물러 있습니다.</b> 그래서 41.3㎡(12.5평) 매물은 시세 수준, 45.9㎡(13.9평) 매물은 시세보다 비싸게 나와 있습니다.</p>
+  <p>여기에 <b>올수리가 아닌 집은 수리비 3,500만 원을 더해</b> 실제로 드는 현금으로 순위를 다시 매겼습니다.</p>
   <ol>
-    <li>상계주공14단지 1404동 저층 <span class="num">5.2억</span>: KB와 같고, 최근 실거래보다 싸서 현금이 가장 적게 듭니다</li>
-    <li>상계주공10단지 1013동 저층 <span class="num">5.5억</span>: KB(5.6억)와 실거래보다 1천만 원 쌉니다</li>
-    <li>상계주공14단지 1402동 10층 <span class="num">5.4억</span>: 10월 실거래(5.5억, 10층)보다 조금 쌉니다</li>
+    <li>상계주공14단지 1420동 8층 <span class="num">5.3억</span>: 올수리라 수리비가 없어 현금이 가장 적게 듭니다(약 1.87억). 실거래보다는 비싸니 4.85억 쪽으로 협상하세요</li>
+    <li>상계주공14단지 1404동 저층 <span class="num">5.2억</span>: 수리비를 더하면 현금 약 1.98억입니다. 이미 수리된 집이면 1.63억으로 1위가 됩니다</li>
+    <li>상계주공14단지 1425동 10층 <span class="num">5.1억</span>: 샷시·중문만 수리돼 수리비를 더하면 현금 약 2.02억입니다</li>
   </ol>
-  <p class="small">45.9㎡(13.9평) 매물(1425·1420·1421동)은 적정가보다 3% 낮은 협상 목표(4.7~4.85억)까지 깎을 수 있을 때만 보세요. 아래 매물 평가 표에서 단지별 적정가와 협상 목표를 확인할 수 있습니다.</p>
+  <p class="small">4~6위는 상계주공10단지 1013동(약 2.08억), 14단지 1421동(약 2.08억), 14단지 1402동(약 2.19억)입니다. 수리비는 위 자금 조건에서 바꿀 수 있고, 바꾸면 모든 표가 다시 계산됩니다. 매물 메모에 "올수리"가 없는 집은 모두 수리비를 더했습니다.</p>
 </section>
 
 <section aria-labelledby="f-h">
@@ -175,6 +176,7 @@ label.ck{font-size:.85rem;color:var(--muted);display:inline-flex;gap:5px;align-i
       <label>보금자리 한도 <input type="number" id="cap" value="42000" step="1000"> 만원</label>
       <label>은행 DSR 한도 <input type="number" id="dsr" value="25747" step="500"> 만원</label>
       <label>가용 자금 <input type="number" id="cash" value="32538" step="1000"> 만원</label>
+      <label>올수리 아닌 집 수리비 <input type="number" id="remodel" value="3500" step="500"> 만원</label>
     </div>
     <p class="note">6억 이하는 보금자리론으로 min(매매가×LTV, 보금자리 한도)를, 6억 초과는 은행 주담대로 min(매매가×LTV, 6억, 은행 DSR 한도)를 받는다고 계산합니다. KB시세를 아는 매물은 매매가와 KB 중 낮은 금액에 LTV를 곱합니다. 부대비용은 취득세와 지방교육세(생애최초 200만 감면), 중개보수 0.4%(부가세 포함), 채권·인지세·법무비 약 120만입니다. 은행 DSR 한도 기본값은 본인 소득 4,800만 원, 금리 4%에 스트레스 3%p, 40년 기준이고, 가용 자금 기본값은 시트의 3억 2,538만입니다.</p>
   </div>
@@ -212,6 +214,7 @@ label.ck{font-size:.85rem;color:var(--muted);display:inline-flex;gap:5px;align-i
         <span><i class="sw" style="background:var(--accent-soft);border:1px solid var(--accent-2)"></i>대출</span>
         <span><i class="sw" style="background:var(--accent)"></i>내 돈</span>
         <span><i class="sw" style="background:var(--warn)"></i>부대비용</span>
+        <span><i class="sw" style="background:var(--blue)"></i>수리비</span>
         <span><i class="sw" style="background:var(--bad)"></i>가용 자금선</span>
       </div>
       <div id="ch-cash"></div>
@@ -680,15 +683,15 @@ const qLabel = k => `${String(Math.floor(k/10)).slice(2)}년 ${k%10}Q`;
 const QUARTERS = []; for (let y=2021;y<=2026;y++) for (let q=1;q<=4;q++){ const k=y*10+q; if (k<=20264) QUARTERS.push(k); }
 
 /* ===== 자금 ===== */
-const I = () => ({rate:+$('rate').value||0, years:+$('years').value||40, ltv:(+$('ltv').value||0)/100, cap:+$('cap').value||0, dsr:+$('dsr').value||0, cash:+$('cash').value||0});
+const I = () => ({rate:+$('rate').value||0, years:+$('years').value||40, ltv:(+$('ltv').value||0)/100, cap:+$('cap').value||0, dsr:+$('dsr').value||0, cash:+$('cash').value||0, remodel:+$('remodel').value||0});
 function payment(P, ratePct, years){ const i = ratePct/100/12, n = years*12; return i===0 ? P/n : P*i/(1-Math.pow(1+i,-n)); }
 function costs(price){ const rate = price<=60000 ? 0.01 : (price<=90000 ? (price/10000*2/3-3)/100 : 0.03); const acq = Math.max(0, price*rate*1.1 - 200); return acq + price*0.004*1.1 + 120; }
-function finance(price, kb){
+function finance(price, kb, extra=0){
   const p=I(); const base = kb ? Math.min(price,kb) : price;
   const bogeum = price <= 60000 && (!kb || kb <= 60000);
   const loan = bogeum ? Math.min(base*p.ltv, p.cap) : Math.min(base*p.ltv, 60000, p.dsr);
-  const cost = costs(price), need = price + cost - loan;
-  return {bogeum, loan, cost, need, own: price-loan, left: p.cash-need, pay: payment(loan*10000, p.rate, p.years)/10000};
+  const cost = costs(price), need = price + cost - loan + extra;
+  return {bogeum, loan, cost, extra, need, own: price-loan, left: p.cash-need, pay: payment(loan*10000, p.rate, p.years)/10000};
 }
 const leftHtml = l => l>=0 ? `<span class="ok">${fmtE(Math.round(l))} 남음</span>` : `<span class="no">${fmtE(Math.round(-l))} 부족</span>`;
 
@@ -866,7 +869,7 @@ function renderListings(){
   let h = `<thead><tr><th>매물</th><th class="r">호가</th><th class="r">비교 거래</th><th class="r">적정가</th><th>판정</th><th class="r">협상 목표</th><th class="r">전고점 대비</th><th class="r">대출</th><th class="r">필요 현금</th><th class="r">월 상환</th><th><span class="muted">삭제</span></th></tr></thead><tbody>`;
   LIST.forEach((L,idx)=>{
     const c = COMPLEX.find(x=>x.id===L.cid); if (!c || !DATA[L.cid]) return;
-    const e = evaluate(L), f = finance(L.price);
+    const e = evaluate(L), f = finance(L.price, undefined, +L.repair===2500 ? 0 : I().remodel);
     const fromTxt = `${String(Math.floor(e.from/100)).slice(2)}.${String(e.from%100).padStart(2,'0')}~`;
     const rep = {0:'기본',1000:'부분수리',2500:'올수리'}[L.repair] || '기본';
     h += `<tr><td><span class="sw" style="background:var(${c.color})"></span> <b>${c.name.replace('상계주공 ','')}</b> ${areaTxt(L.area)} ${L.dong?esc(L.dong)+'동 ':''}${L.floor}층 <span class="pill p-grey">${rep}</span>${L.memo?`<div class="muted small">${esc(L.memo)}</div>`:''}</td>
@@ -969,13 +972,14 @@ const STATION={s14:'마들역 · 동별 확인',s10:'마들역 초역세권',s11
 const KBMAP={'s14|41.3':52000,'s14|45.9':50000,'s10|45.9':56000,'mujigae|39.82':54500,'s9|45.9':55500,'s9|41.3':54500,'s1|41.3':55000,'s11|41.3':54500,'green|39.78':57000};
 const DEAL={'s14|41.3':[55000,'10/17 · 10층'],'s14|45.9':[44600,'9/10 · 6층'],'s10|45.9':[56000,'10/23 · 9층'],'mujigae|39.82':[54000,'10/6 · 4층'],'s9|45.9':[59700,'8/24 · 12층'],'s9|41.3':[56000,'10/2 · 5층'],'s1|41.3':[58000,'8/14 · 13층'],'s11|41.3':[61000,'10/16 · 10층'],'green|39.78':[60000,'9/29 · 10층']};
 const TOPINFO={
-  '상계주공14단지 1404동 저층':{r:1,tenant:'?',floor:'✓',memo:'급매, 1층 아님, 입주 협의'},
-  '상계주공10단지 1013동 저층':{r:2,tenant:'?',floor:'?'},
-  '상계주공14단지 1402동 10층':{r:3,tenant:'?'},
-  '상계주공14단지 1425동 10층':{r:4,tenant:'✓'},
-  '상계주공14단지 1420동 8층':{r:5,tenant:'✓'},
-  '상계주공14단지 1421동 10층':{r:6,tenant:'?'},
+  '상계주공14단지 1404동 저층':{r:2,tenant:'?',floor:'✓',memo:'급매, 1층 아님, 입주 협의'},
+  '상계주공10단지 1013동 저층':{r:4,tenant:'?',floor:'?'},
+  '상계주공14단지 1402동 10층':{r:6,tenant:'?'},
+  '상계주공14단지 1425동 10층':{r:3,tenant:'✓'},
+  '상계주공14단지 1420동 8층':{r:1,tenant:'✓'},
+  '상계주공14단지 1421동 10층':{r:5,tenant:'?'},
 };
+const exOf = x => x.repair===2500 ? 0 : I().remodel;
 const GORDER=["⭐ 1순위","○ 후보","△ 예산 내·후순위"];
 const floorOf=f=>{const m=f.match(/(\d+)층/); if(m) return +m[1]; if(/저층/.test(f)) return 3; if(/중층/.test(f)) return 7; if(/고층/.test(f)) return 12; return 5;};
 const repairOf=m=>/올수리/.test(m)?2500:(/수리|샷시|교체/.test(m)?1000:0);
@@ -1004,9 +1008,9 @@ $("filters").addEventListener("click",e=>{const b=e.target.closest("button");if(
 function renderTop(){
   const list=shownListings();
   $("cmpCount").textContent=`${list.length}건`;
-  let h=`<thead><tr><th>판정</th><th>아파트 · 동/층</th><th class="r">매매가</th><th class="r">KB 일반가</th><th class="r">실거래 적정가</th><th>실거래 판정</th><th class="r">협상 목표</th><th>평형 / 전용</th><th class="r">대출</th><th class="r">필요 현금</th><th>가용 자금 대비</th><th class="r">월 상환</th><th>메모</th></tr></thead><tbody>`;
+  let h=`<thead><tr><th>판정</th><th>아파트 · 동/층</th><th class="r">매매가</th><th class="r">KB 일반가</th><th class="r">실거래 적정가</th><th>실거래 판정</th><th class="r">협상 목표</th><th class="r">수리비</th><th class="r">실질 매입가</th><th>평형 / 전용</th><th class="r">대출</th><th class="r">필요 현금</th><th>가용 자금 대비</th><th class="r">월 상환</th><th>메모</th></tr></thead><tbody>`;
   list.forEach(x=>{
-    const f=finance(x.price,x.kb), e=evalOf(x);
+    const f=finance(x.price,x.kb,exOf(x)), e=evalOf(x);
     let kbCell='<span class="muted">미확인</span>';
     if (x.kb){ const d=x.price-x.kb; kbCell=`${fmtE(x.kb)}<br>${d<0?`<span class="pill p-good">−${(-d).toLocaleString()}만</span>`:d===0?`<span class="pill p-good">±0</span>`:`<span class="pill ${d>=3000?'p-bad':'p-warn'}">+${d.toLocaleString()}만</span>`}`; }
     const fairCell = e ? `${fmtE(Math.round(e.fair/100)*100)}<div class="muted small">호가 ${(e.ratio*100).toFixed(0)}% · ${e.c.length}건</div>` : (x.deal?`<span class="muted small">KB화면 실거래 ${fmtE(x.deal[0])}</span>`:'<span class="muted">데이터 없음</span>');
@@ -1015,6 +1019,7 @@ function renderTop(){
     <td><span class="apt">${x.d}</span><br><span class="muted small">${x.f}</span></td>
     <td class="r num"><b>${fmtE(x.price)}</b></td><td class="r num">${kbCell}</td>
     <td class="r num">${fairCell}</td><td>${verdict}</td><td class="r num">${e && x.price>e.target?fmtE(e.target):'<span class="muted">지금 가격</span>'}</td>
+    <td class="r num">${x.repair===2500?'<span class="muted">올수리</span>':fmtE(f.extra)}</td><td class="r num"><b>${fmtE(x.price+f.extra)}</b></td>
     <td>${pyeong(x.s)}평형<br><span class="muted small">전용 ${pyeong(x.e)}평 (${x.e}㎡)</span></td>
     <td class="r num">${f.bogeum?'':'<span class="warn small">은행 </span>'}${fmtE(Math.round(f.loan))}</td><td class="r num"><b>${fmtE(Math.round(f.need))}</b></td><td>${leftHtml(f.left)}</td><td class="r num">${Math.round(f.pay).toLocaleString()}만</td>
     <td class="wrapcell small">${x.m}${x.dup?`<br><span class="muted">${x.dup}</span>`:''}</td></tr>`;
@@ -1053,12 +1058,13 @@ function renderCashChart(){
   for(let v=0;v<=60000;v+=10000){s.appendChild(el("line",{x1:x(v),x2:x(v),y1:top,y2:H-26,stroke:"var(--line)"}));s.appendChild(el("text",{x:x(v),y:H-10,"text-anchor":"middle",class:"axis"},v/1e4+"억"))}
   const cash=I().cash;
   list.forEach((t,i)=>{
-    const f=finance(t.price,t.kb),y=top+i*rowH+7,h=rowH-14;
+    const f=finance(t.price,t.kb,exOf(t)),y=top+i*rowH+7,h=rowH-14;
     rowLabel(s,t,y+h/2+2);
     s.appendChild(el("rect",{x:x(0),y,width:x(f.loan)-x(0),height:h,fill:"var(--accent-soft)",stroke:"var(--accent-2)","stroke-width":1,rx:3}));
     s.appendChild(el("rect",{x:x(f.loan),y,width:x(t.price)-x(f.loan),height:h,fill:"var(--accent)"}));
     s.appendChild(el("rect",{x:x(t.price),y,width:Math.max(2,x(t.price+f.cost)-x(t.price)),height:h,fill:"var(--warn)"}));
-    s.appendChild(el("text",{x:x(t.price+f.cost)+6,y:y+h/2+4,class:"val",style:`font-weight:600;${f.left<0?'fill:var(--bad)':''}`},"현금 "+fmtShort(f.need)));
+    if (f.extra) s.appendChild(el("rect",{x:x(t.price+f.cost),y,width:x(t.price+f.cost+f.extra)-x(t.price+f.cost),height:h,fill:"var(--blue)"}));
+    s.appendChild(el("text",{x:x(t.price+f.cost+f.extra)+6,y:y+h/2+4,class:"val",style:`font-weight:600;${f.left<0?'fill:var(--bad)':''}`},"현금 "+fmtShort(f.need)));
     const cx=x(f.loan+cash); if (cx<=W-right+60) s.appendChild(el("line",{x1:cx,x2:cx,y1:y-3,y2:y+h+3,stroke:"var(--bad)","stroke-width":2}));
   });
   $("ch-cash").replaceChildren(s);
@@ -1071,7 +1077,7 @@ function renderMatrix(){
     ["KB 6억 이하",x=>x.kb?(x.kb<=60000?"✓":"✗"):"?"],
     ["매매가 ≤ KB",x=>x.kb?(x.price<=x.kb?"✓":"✗"):"?"],
     ["실거래 판정",x=>{const e=evalOf(x); return e?`<span class="verdictpill ${e.cls}">${e.v}</span>`:"?";}],
-    ["가용 자금 안",x=>finance(x.price,x.kb).left>=0?"✓":"✗"],
+    ["가용 자금 안",x=>finance(x.price,x.kb,exOf(x)).left>=0?"✓":"✗"],
     ["1층 아님",x=>x.fl],
     ["세입자 없음",x=>x.tenant],
     ["수리",x=>x.repair===2500?'<span class="small">올수리</span>':x.repair===1000?'<span class="small">부분</span>':'<span class="muted small">기본</span>'],
@@ -1091,7 +1097,7 @@ $('groupSeg').innerHTML = GROUPS.map(g=>`<button type="button" data-g="${g.id}" 
 $('groupSeg').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; state.group=b.dataset.g; [...$('groupSeg').children].forEach(x=>x.classList.toggle('on',x===b)); renderMarket(); });
 $('metricSeg').addEventListener('click', e=>{ const b=e.target.closest('button'); if(!b) return; state.metric=b.dataset.m; [...$('metricSeg').children].forEach(x=>x.classList.toggle('on',x===b)); renderChart(); });
 ['exD','ex1'].forEach(id=>$(id).addEventListener('change', renderMarket));
-['rate','years','ltv','cap','cash','dsr'].forEach(id=>$(id).addEventListener('input', renderMoney));
+['rate','years','ltv','cap','cash','dsr','remodel'].forEach(id=>$(id).addEventListener('input', renderMoney));
 renderMoney(); renderMarket();
 </script>
 
